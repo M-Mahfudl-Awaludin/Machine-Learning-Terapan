@@ -86,12 +86,14 @@ Hasil :
 3. Histogram: Distribusi Curah Hujan Rata-rata
 - Tujuan: Menampilkan distribusi curah hujan rata-rata dalam milimeter per tahun.
 - Penjelasan: Histogram ini menggambarkan berapa banyak lokasi yang mengalami curah hujan tertentu. Data ini bisa membantu menganalisis faktor cuaca yang memengaruhi kesuburan tanah.
+
 Hasil :
 ![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/8a6949d1a4c55ad2b6f6647388079ce99b40db50/Submission%201/assets/Average%20Rainfall.png)
 
 4. Histogram: Distribusi Suhu Rata-rata
 - Tujuan: Menampilkan distribusi suhu rata-rata di berbagai lokasi.
 - Penjelasan: Suhu rata-rata dapat memengaruhi tipe tanaman yang sesuai untuk ditanam. Visualisasi ini memberi wawasan tentang variabilitas suhu di wilayah yang berbeda.
+
 Hasil :
 ![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/8a6949d1a4c55ad2b6f6647388079ce99b40db50/Submission%201/assets/Distribution%20of%20Temperature.png)
 
@@ -104,48 +106,56 @@ Hasil :
 6. Heatmap Korelasi
 - Tujuan: Menggambarkan korelasi antar variabel numerik seperti indeks kesuburan, curah hujan, dan suhu.
 - Penjelasan: Heatmap ini menunjukkan hubungan linear antara variabel-variabel tersebut. Korelasi positif atau negatif yang kuat dapat memberikan wawasan tentang faktor-faktor yang berpengaruh terhadap kesuburan tanah.
+
 Hasil :
 ![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/8a6949d1a4c55ad2b6f6647388079ce99b40db50/Submission%201/assets/Correlation%20Heatmap.png)
 
 7. Boxplot: Tipe Tanah vs Indeks Kesuburan
 - Tujuan: Menganalisis perbedaan indeks kesuburan berdasarkan tipe tanah.
 - Penjelasan: Boxplot ini menunjukkan bagaimana distribusi nilai indeks kesuburan berbeda-beda untuk tiap tipe tanah. Ini bisa membantu menentukan jenis tanah mana yang paling subur atau membutuhkan perhatian lebih.
+
 Hasil :
 ![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/8a6949d1a4c55ad2b6f6647388079ce99b40db50/Submission%201/assets/Soil%20Type%20vs%20Fertility%20Index.png)
 
 8. Countplot: Frekuensi Kategori 'Remarks'
 - Tujuan: Menampilkan jumlah data yang terdapat pada tiap kategori Remarks.
 - Penjelasan: Countplot ini menunjukkan seberapa sering tiap kategori remarks muncul. Hal ini memberikan gambaran tentang seberapa banyak lokasi pertanian yang memiliki catatan khusus atau peringatan.
+
 Hasil :
 ![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/8a6949d1a4c55ad2b6f6647388079ce99b40db50/Submission%201/assets/Frequency%20of%20Remarks%20Categories.png)
 
 9. Trend Kesesuaian Tanaman Berdasarkan Tahun
 - Tujuan: Menampilkan tren kesesuaian tanaman selama periode waktu berdasarkan tanggal observasi satelit.
 - Penjelasan: Menggunakan visualisasi ini, kita dapat melihat perubahan tren kesesuaian tanaman sepanjang tahun dan apakah ada pola musiman atau perubahan akibat faktor lingkungan.
+
 Hasil :
 ![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/8a6949d1a4c55ad2b6f6647388079ce99b40db50/Submission%201/assets/Crop%20Suitability%20Trends%20Over%20the%20Years.png)
 
 10. Pie Chart: Distribusi Jenis Tanah
 - Tujuan: Menampilkan distribusi proporsi dari masing-masing tipe tanah dalam dataset.
 - Penjelasan: Pie chart ini menunjukkan persentase masing-masing tipe tanah yang terdapat dalam dataset, memberi gambaran umum mengenai kondisi tanah di Bangladesh.
+
 Hasil :
 ![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/8a6949d1a4c55ad2b6f6647388079ce99b40db50/Submission%201/assets/Distribution%20of%20Soil%20Type.png)
 
 11. Violin Plot: Indeks Kesuburan Berdasarkan Kesesuaian Tanaman
 - Tujuan: Menampilkan distribusi indeks kesuburan berdasarkan kesesuaian tanaman.
 - Penjelasan: Violin plot ini memberikan gambaran mengenai distribusi kesuburan tanah untuk berbagai jenis tanaman, yang dapat menunjukkan perbedaan dalam kualitas tanah yang cocok untuk tanaman tertentu.
+
 Hasil :
 ![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/8a6949d1a4c55ad2b6f6647388079ce99b40db50/Submission%201/assets/Violin%20Plot%20Temperature%20by%20Land%20Use%20Type.png)
 
 12. Scatter Plot: Hubungan Curah Hujan vs Suhu
 - Tujuan: Menampilkan hubungan antara curah hujan dan suhu untuk lokasi yang berbeda.
 - Penjelasan: Scatter plot ini membantu mengidentifikasi apakah ada pola atau korelasi antara curah hujan dan suhu yang dapat mempengaruhi kesesuaian tanaman.
+
 Hasil :
 ![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/8a6949d1a4c55ad2b6f6647388079ce99b40db50/Submission%201/assets/Scatter%20Plot%20Average%20Rainfall%20vs%20Temperature.png)
 
 13. Heatmap Korelasi Matriks
 - Tujuan: Menampilkan hubungan korelasi yang lebih mendalam antar variabel numerik.
 - Penjelasan: Heatmap ini membantu kita memahami seberapa kuat hubungan antara faktor-faktor seperti indeks kesuburan, curah hujan, dan suhu, yang dapat memengaruhi hasil pertanian di Bangladesh.
+
 Hasil :
 ![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/8a6949d1a4c55ad2b6f6647388079ce99b40db50/Submission%201/assets/Heatmap%20of%20Correlation%20Matrix.png)
 
@@ -153,8 +163,7 @@ Hasil :
 1. Label Encoding pada Kolom Kategorikal
 Langkah pertama dalam persiapan data adalah menangani data kategorikal. Karena sebagian besar algoritma machine learning memerlukan input numerik, maka variabel kategorikal diubah menjadi nilai numerik menggunakan LabelEncoder dari sklearn.preprocessing.
 
-python
-Copy code
+```python
 from sklearn.preprocessing import LabelEncoder
 
 # Membuat instance LabelEncoder
@@ -168,13 +177,14 @@ for column in categorical_columns:
 
 # Menampilkan dataset yang telah di-encode
 print(df.head())
+```
+
 Alasan untuk langkah ini: Label encoding diperlukan untuk mengubah fitur kategorikal (misalnya 'Location', 'Soil_Type', dll.) menjadi nilai numerik. Hal ini memudahkan algoritma machine learning untuk memproses data tersebut.
 
 2. Konversi Tanggal
 Langkah berikutnya adalah menangani fitur Satellite_Observation_Date, yang merupakan kolom tanggal berupa string. Kolom ini dikonversi menjadi tipe datetime agar lebih mudah untuk mengekstrak komponen-komponen waktu seperti Year, Month, dan Day.
 
-python
-Copy code
+```python
 # Mengonversi 'Satellite_Observation_Date' menjadi datetime
 df['Satellite_Observation_Date'] = pd.to_datetime(df['Satellite_Observation_Date'])
 
@@ -185,25 +195,26 @@ df['Day'] = df['Satellite_Observation_Date'].dt.day
 
 # Menampilkan dataset yang telah diperbarui
 print(df[['Satellite_Observation_Date', 'Year', 'Month', 'Day']].head())
+```
+
 Alasan untuk langkah ini: Fitur tanggal sering kali berguna untuk mengekstrak pola berbasis waktu atau musiman. Dengan memecah tanggal menjadi komponen tahun, bulan, dan hari, kita membuatnya lebih mudah diproses oleh model.
 
 3. Menghapus Kolom yang Tidak Relevan
 Setelah itu, kita menghapus kolom Satellite_Observation_Date dan Day karena kita tidak lagi memerlukan informasi tanggal asli dan sudah mengekstrak detail yang relevan ke dalam kolom terpisah.
 
-python
-Copy code
+```python
 # Menghapus kolom 'Satellite_Observation_Date' dan 'Day'
 df = df.drop(columns=['Satellite_Observation_Date', 'Day'])
 
 # Menampilkan dataset yang telah diperbarui
 print(df.head())
+```
 Alasan untuk langkah ini: Menghapus kolom yang tidak relevan akan mengurangi dimensi dataset dan mencegah data yang tidak penting memengaruhi model.
 
 4. Penskalaan Fitur Numerik
 Langkah selanjutnya adalah melakukan penskalaan pada fitur numerik menggunakan Min-Max scaling. Penskalaan penting dilakukan agar semua fitur numerik berada dalam skala yang sama, yang sangat penting untuk algoritma seperti K-Nearest Neighbors, SVM, dan Gradient Boosting.
 
-python
-Copy code
+```python
 from sklearn.preprocessing import MinMaxScaler
 
 # Memilih hanya kolom numerik untuk penskalaan
@@ -217,13 +228,13 @@ df[numerical_columns] = scaler.fit_transform(df[numerical_columns])
 
 # Menampilkan dataset yang telah diskalakan
 print(df.head())
+```
 Alasan untuk langkah ini: Penskalaan sangat penting karena beberapa algoritma machine learning, seperti K-Nearest Neighbors dan Support Vector Machine (SVM), sangat terpengaruh oleh skala data. Dengan penskalaan, kita memastikan bahwa setiap fitur memiliki kontribusi yang setara pada model.
 
 5. Pembagian Dataset (Train-Test Split)
 Setelah mempersiapkan data, kita perlu membagi dataset menjadi data pelatihan (training) dan data pengujian (test). Ini bertujuan agar model dapat dilatih dengan data pelatihan dan diuji pada data yang tidak terlihat sebelumnya untuk mengukur kinerjanya.
 
-python
-Copy code
+```python
 from sklearn.model_selection import train_test_split
 
 # Memisahkan fitur (X) dan target (y)
@@ -232,8 +243,8 @@ y = df['Crop_Suitability']  # Target
 
 # Membagi dataset menjadi data pelatihan dan data pengujian (80% untuk training, 20% untuk testing)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+```
 Alasan untuk langkah ini: Pembagian data menjadi data pelatihan dan data pengujian memastikan bahwa model dapat diuji pada data yang tidak digunakan selama pelatihan, sehingga memberikan evaluasi yang lebih objektif.
-
 Dengan langkah-langkah ini, dataset sudah siap untuk tahap pemodelan.
 
 ## Modeling
@@ -251,8 +262,7 @@ XGBoost
 LightGBM
 Model-model ini diuji pada data pelatihan dan diuji akurasinya pada data pengujian.
 
-python
-Copy code
+```python
 from sklearn.metrics import accuracy_score
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
@@ -289,7 +299,117 @@ for name, model in models.items():
 # Menampilkan hasil akurasi untuk setiap model
 for name, accuracy in results.items():
     print(f"{name}: {accuracy:.4f}")
+```
 Hasil akurasi untuk masing-masing model kemudian akan dibandingkan, dan model terbaik akan dipilih berdasarkan hasil akurasi tertinggi.
+Penjelasan Model Algoritma
+1. Logistic Regression
+- Tahapan:
+    - Logistic Regression adalah model klasifikasi yang digunakan untuk memprediksi probabilitas dari suatu kelas (biasanya untuk dua kelas, tetapi bisa juga untuk multi-kelas dengan pendekatan one-vs-rest).
+    - Dalam pemodelan ini, kami menggunakan Logistic Regression dengan default parameter.
+- Kelebihan:
+    - Mudah dipahami dan diterapkan.
+    - Memiliki interpretasi yang baik karena memberikan probabilitas kelas.
+- Kekurangan:
+    - Kurang efektif jika data sangat tidak linier atau memiliki banyak interaksi antar fitur.
+    - Cenderung menghasilkan performa yang buruk dibandingkan dengan model yang lebih kompleks jika hubungan antar fitur dan target tidak linear.
+      
+2. K-Nearest Neighbors (KNN)
+- Tahapan:
+    - KNN adalah algoritma yang digunakan untuk klasifikasi berdasarkan kedekatan antara data titik dan titik data lainnya (neighbors).
+    - Pada eksperimen ini, digunakan dengan parameter default.
+- Kelebihan:
+    - Sederhana dan mudah diimplementasikan.
+    - Tidak memerlukan pelatihan data eksplisit (lazy learning).
+- Kekurangan:
+    - Sangat sensitif terhadap data yang tidak terstandarisasi, sehingga perlu skala data (scaling).
+    - Cenderung tidak efisien pada dataset besar karena perhitungan jarak yang harus dilakukan untuk setiap prediksi.
+      
+3. Support Vector Machine (SVM)
+- Tahapan:
+    - SVM digunakan untuk memisahkan kelas dengan batas keputusan yang optimal di ruang fitur.
+    - Dikenal efektif untuk masalah klasifikasi dengan margin yang jelas antara kelas.
+- Kelebihan:
+    - Dapat menangani data dengan dimensi tinggi.
+    - Efektif dalam kasus margin yang jelas dan meminimalkan kesalahan klasifikasi.
+- Kekurangan:
+    - Memerlukan waktu komputasi yang lebih lama pada dataset besar.
+    - Performa menurun ketika data sangat banyak noise (outliers) atau overlap antar kelas.
+
+4. Decision Tree
+- Tahapan:
+    - Decision Tree digunakan untuk membangun pohon keputusan dengan mempartisi data berdasarkan fitur yang paling informatif.
+    - Dikenal sebagai model yang mudah dipahami dan dapat menggambarkan keputusan secara grafis.
+- Kelebihan:
+    - Mudah diinterpretasikan, visualisasi hasilnya bisa langsung dipahami.
+    - Tidak memerlukan normalisasi fitur.
+- Kekurangan:
+    - Cenderung overfitting, terutama jika pohon terlalu dalam.
+    - Tidak dapat menangani data non-linear dengan baik.
+
+5. Random Forest
+- Tahapan:
+    - Random Forest adalah ensemble model yang menggabungkan banyak pohon keputusan untuk meningkatkan stabilitas dan akurasi.
+    - Random Forest membangun banyak pohon keputusan dan menggabungkan hasil prediksi mereka.
+- Kelebihan:
+    - Cenderung lebih akurat dan stabil dibandingkan Decision Tree karena mengurangi overfitting.
+    - Dapat menangani data non-linear dengan lebih baik.
+- Kekurangan:
+    - Lebih lambat dibandingkan dengan Decision Tree pada tahap prediksi karena jumlah pohon yang banyak.
+    - Memerlukan lebih banyak memori dan waktu komputasi.
+
+6. Naive Bayes
+- Tahapan:
+    - Naive Bayes menggunakan probabilitas untuk memprediksi kelas berdasarkan teorema Bayes, mengasumsikan bahwa fitur-fitur adalah independen.
+    - Di sini digunakan untuk membandingkan dengan model lainnya.
+- Kelebihan:
+    - Cepat dan efisien untuk dataset besar.
+    - Baik untuk data dengan banyak fitur yang tidak saling bergantung.
+- Kekurangan:
+    - Asumsi independensi antara fitur seringkali tidak realistis, yang dapat menurunkan akurasi dalam beberapa kasus.
+
+7. Gradient Boosting
+- Tahapan:
+    - Gradient Boosting adalah model ensemble yang membangun model secara bertahap dan mengoptimalkan kesalahan dari model sebelumnya.
+    - Model ini lebih baik dalam menangani ketidakseimbangan data.
+- Kelebihan:
+    - Sangat kuat dalam masalah klasifikasi yang kompleks.
+    - Menghasilkan prediksi yang sangat baik jika di-tune dengan baik.
+- Kekurangan:
+    - Memerlukan waktu pelatihan yang lebih lama karena merupakan metode boosting yang iteratif.
+    - Cenderung overfitting jika tidak diatur dengan benar.
+
+8. AdaBoost
+- Tahapan:
+    - AdaBoost adalah teknik boosting yang memberikan bobot lebih besar pada data yang sebelumnya sulit diprediksi oleh model.
+    - Model-model lemah dipelajari secara iteratif, dengan meningkatkan bobot kesalahan.
+- Kelebihan:
+    - Sederhana dan efektif, sering memberikan peningkatan akurasi yang signifikan pada model yang lemah.
+    - Tidak memerlukan banyak data untuk menghindari overfitting.
+- Kekurangan:
+    - Sensitif terhadap outliers, yang dapat mempengaruhi hasil.
+    - Performanya dapat berkurang pada data yang sangat kompleks.
+
+9. XGBoost
+- Tahapan:
+    - XGBoost adalah versi lebih lanjut dari Gradient Boosting yang mengoptimalkan waktu komputasi dan kinerja prediksi.
+    - Teknik ini terkenal karena performanya yang sangat baik pada berbagai jenis masalah klasifikasi.
+- Kelebihan:
+    - Sangat cepat dan efisien dalam pelatihan.
+    - Umumnya memberikan hasil yang sangat baik dalam klasifikasi dan regresi.
+- Kekurangan:
+    - Perlu penyesuaian hyperparameter yang cermat untuk mendapatkan hasil terbaik.
+    Cenderung overfitting jika tidak diatur dengan baik.
+
+10. LightGBM
+- Tahapan:
+    - LightGBM adalah implementasi dari gradient boosting yang dioptimalkan untuk kecepatan dan efisiensi memori.
+    - LightGBM lebih cepat dalam memproses data besar dan mendukung distribusi data.
+- Kelebihan:
+    - Sangat cepat dalam pelatihan, bahkan untuk dataset besar.
+    - Dapat menangani data yang sangat besar dengan efisien.
+- Kekurangan:
+    - Seperti XGBoost, memerlukan tuning yang cermat untuk menghindari overfitting.
+    Kurang cocok untuk data yang sangat tidak seimbang.
 
 
 ## Evaluation
