@@ -79,7 +79,7 @@ plt.title('Crop Suitability in Charghat')
 plt.show()
 ```
 Hasil :
-[gambar](Submission 1/assets/Crop_Suitability.png)
+[gambar]([Submission 1/assets/Crop_Suitability.png](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/bbdb774b50ef3ecc9a600f18ea79f65f8066dfb1/Submission%201/assets/Crop_Suitability.png))
 2. Histogram: Distribusi Indeks Kesuburan
 Tujuan: Menampilkan distribusi nilai indeks kesuburan tanah.
 Penjelasan: Histogram ini menunjukkan penyebaran nilai indeks kesuburan pada berbagai lokasi dalam dataset. Jika distribusinya miring atau terdapat puncak tertentu, ini dapat menunjukkan tingkat kesuburan tanah yang dominan di daerah tersebut.
