@@ -75,89 +75,89 @@ Untuk lebih memahami dataset ini, dilakukan visualisasi & eksplorasi data (EDA) 
 - Tujuan: Visualisasi hubungan antara kesesuaian tanaman dan indeks kesuburan.
 - Penjelasan: Bar plot ini menggambarkan bagaimana kesuburan tanah (indeks kesuburan) terkait dengan kesesuaian tanaman yang dapat ditanam di wilayah tersebut. Ini memberikan gambaran tentang jenis tanaman yang lebih cocok untuk tanah yang lebih subur.
 
-Hasil :
+Hasil : <br>
 ![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/bbdb774b50ef3ecc9a600f18ea79f65f8066dfb1/Submission%201/assets/Crop_Suitability.png)
 
 2. Histogram: Distribusi Indeks Kesuburan
 - Tujuan: Menampilkan distribusi nilai indeks kesuburan tanah.
 - Penjelasan: Histogram ini menunjukkan penyebaran nilai indeks kesuburan pada berbagai lokasi dalam dataset. Jika distribusinya miring atau terdapat puncak tertentu, ini dapat menunjukkan tingkat kesuburan tanah yang dominan di daerah tersebut.
-Hasil :
+Hasil : <br>
 ![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/8a6949d1a4c55ad2b6f6647388079ce99b40db50/Submission%201/assets/Distribution%20of%20Fertility%20Index.png)
 
 3. Histogram: Distribusi Curah Hujan Rata-rata
 - Tujuan: Menampilkan distribusi curah hujan rata-rata dalam milimeter per tahun.
 - Penjelasan: Histogram ini menggambarkan berapa banyak lokasi yang mengalami curah hujan tertentu. Data ini bisa membantu menganalisis faktor cuaca yang memengaruhi kesuburan tanah.
 
-Hasil :
+Hasil : <br>
 ![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/8a6949d1a4c55ad2b6f6647388079ce99b40db50/Submission%201/assets/Average%20Rainfall.png)
 
 4. Histogram: Distribusi Suhu Rata-rata
 - Tujuan: Menampilkan distribusi suhu rata-rata di berbagai lokasi.
 - Penjelasan: Suhu rata-rata dapat memengaruhi tipe tanaman yang sesuai untuk ditanam. Visualisasi ini memberi wawasan tentang variabilitas suhu di wilayah yang berbeda.
 
-Hasil :
+Hasil : <br>
 ![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/8a6949d1a4c55ad2b6f6647388079ce99b40db50/Submission%201/assets/Distribution%20of%20Temperature.png)
 
 5. Pairplot: Hubungan antara Variabel
 - Tujuan: Memvisualisasikan hubungan antara berbagai variabel dalam dataset, dengan warna berdasarkan kesesuaian tanaman.
 - Penjelasan: Pairplot ini memungkinkan kita untuk melihat pola-pola distribusi data dan hubungan antar variabel secara langsung. Misalnya, kita dapat melihat apakah suhu berhubungan dengan curah hujan atau indeks kesuburan dalam konteks kesesuaian tanaman.
-Hasil :
+Hasil : <br>
 ![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/8a6949d1a4c55ad2b6f6647388079ce99b40db50/Submission%201/assets/Pairplot%20of%20Variables%20by%20Crop%20Suitability.png)
 
 6. Heatmap Korelasi
 - Tujuan: Menggambarkan korelasi antar variabel numerik seperti indeks kesuburan, curah hujan, dan suhu.
 - Penjelasan: Heatmap ini menunjukkan hubungan linear antara variabel-variabel tersebut. Korelasi positif atau negatif yang kuat dapat memberikan wawasan tentang faktor-faktor yang berpengaruh terhadap kesuburan tanah.
 
-Hasil :
+Hasil : <br>
 ![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/8a6949d1a4c55ad2b6f6647388079ce99b40db50/Submission%201/assets/Correlation%20Heatmap.png)
 
 7. Boxplot: Tipe Tanah vs Indeks Kesuburan
 - Tujuan: Menganalisis perbedaan indeks kesuburan berdasarkan tipe tanah.
 - Penjelasan: Boxplot ini menunjukkan bagaimana distribusi nilai indeks kesuburan berbeda-beda untuk tiap tipe tanah. Ini bisa membantu menentukan jenis tanah mana yang paling subur atau membutuhkan perhatian lebih.
 
-Hasil :
+Hasil : <br>
 ![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/8a6949d1a4c55ad2b6f6647388079ce99b40db50/Submission%201/assets/Soil%20Type%20vs%20Fertility%20Index.png)
 
 8. Countplot: Frekuensi Kategori 'Remarks'
 - Tujuan: Menampilkan jumlah data yang terdapat pada tiap kategori Remarks.
 - Penjelasan: Countplot ini menunjukkan seberapa sering tiap kategori remarks muncul. Hal ini memberikan gambaran tentang seberapa banyak lokasi pertanian yang memiliki catatan khusus atau peringatan.
 
-Hasil :
+Hasil : <br>
 ![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/8a6949d1a4c55ad2b6f6647388079ce99b40db50/Submission%201/assets/Frequency%20of%20Remarks%20Categories.png)
 
 9. Trend Kesesuaian Tanaman Berdasarkan Tahun
 - Tujuan: Menampilkan tren kesesuaian tanaman selama periode waktu berdasarkan tanggal observasi satelit.
 - Penjelasan: Menggunakan visualisasi ini, kita dapat melihat perubahan tren kesesuaian tanaman sepanjang tahun dan apakah ada pola musiman atau perubahan akibat faktor lingkungan.
 
-Hasil :
+Hasil : <br>
 ![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/8a6949d1a4c55ad2b6f6647388079ce99b40db50/Submission%201/assets/Crop%20Suitability%20Trends%20Over%20the%20Years.png)
 
 10. Pie Chart: Distribusi Jenis Tanah
 - Tujuan: Menampilkan distribusi proporsi dari masing-masing tipe tanah dalam dataset.
 - Penjelasan: Pie chart ini menunjukkan persentase masing-masing tipe tanah yang terdapat dalam dataset, memberi gambaran umum mengenai kondisi tanah di Bangladesh.
 
-Hasil :
+Hasil : <br>
 ![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/8a6949d1a4c55ad2b6f6647388079ce99b40db50/Submission%201/assets/Distribution%20of%20Soil%20Type.png)
 
 11. Violin Plot: Indeks Kesuburan Berdasarkan Kesesuaian Tanaman
 - Tujuan: Menampilkan distribusi indeks kesuburan berdasarkan kesesuaian tanaman.
 - Penjelasan: Violin plot ini memberikan gambaran mengenai distribusi kesuburan tanah untuk berbagai jenis tanaman, yang dapat menunjukkan perbedaan dalam kualitas tanah yang cocok untuk tanaman tertentu.
 
-Hasil :
+Hasil : <br>
 ![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/8a6949d1a4c55ad2b6f6647388079ce99b40db50/Submission%201/assets/Violin%20Plot%20Temperature%20by%20Land%20Use%20Type.png)
 
 12. Scatter Plot: Hubungan Curah Hujan vs Suhu
 - Tujuan: Menampilkan hubungan antara curah hujan dan suhu untuk lokasi yang berbeda.
 - Penjelasan: Scatter plot ini membantu mengidentifikasi apakah ada pola atau korelasi antara curah hujan dan suhu yang dapat mempengaruhi kesesuaian tanaman.
 
-Hasil :
+Hasil : <br>
 ![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/8a6949d1a4c55ad2b6f6647388079ce99b40db50/Submission%201/assets/Scatter%20Plot%20Average%20Rainfall%20vs%20Temperature.png)
 
 13. Heatmap Korelasi Matriks
 - Tujuan: Menampilkan hubungan korelasi yang lebih mendalam antar variabel numerik.
 - Penjelasan: Heatmap ini membantu kita memahami seberapa kuat hubungan antara faktor-faktor seperti indeks kesuburan, curah hujan, dan suhu, yang dapat memengaruhi hasil pertanian di Bangladesh.
 
-Hasil :
+Hasil : <br>
 ![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/8a6949d1a4c55ad2b6f6647388079ce99b40db50/Submission%201/assets/Heatmap%20of%20Correlation%20Matrix.png)
 
 ## Data Preparation
@@ -181,7 +181,7 @@ for column in categorical_columns:
 # Menampilkan dataset yang telah di-encode
 print(df.head())
 ```
-**Hasil :**
+**Hasil :** <br>
 ![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/63126eb19a7c9e06cbfd3e5c47c643e4f2c7e9a6/Submission%201/assets/1.PNG)
 
 Alasan untuk langkah ini: Label encoding diperlukan untuk mengubah fitur kategorikal (misalnya 'Location', 'Soil_Type', dll.) menjadi nilai numerik. Hal ini memudahkan algoritma machine learning untuk memproses data tersebut.
@@ -202,7 +202,7 @@ df['Day'] = df['Satellite_Observation_Date'].dt.day
 # Menampilkan dataset yang telah diperbarui
 print(df[['Satellite_Observation_Date', 'Year', 'Month', 'Day']].head())
 ```
-**Hasil**
+**Hasil** <br>
 ![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/63126eb19a7c9e06cbfd3e5c47c643e4f2c7e9a6/Submission%201/assets/2.PNG)
 
 Alasan untuk langkah ini: Fitur tanggal sering kali berguna untuk mengekstrak pola berbasis waktu atau musiman. Dengan memecah tanggal menjadi komponen tahun, bulan, dan hari, kita membuatnya lebih mudah diproses oleh model.
@@ -220,7 +220,7 @@ df = df.drop(columns=['Satellite_Observation_Date', 'Day'])
 print(df.head())
 ```
 
-**Hasil**
+**Hasil** <br>
 ![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/63126eb19a7c9e06cbfd3e5c47c643e4f2c7e9a6/Submission%201/assets/3.PNG)
 
 Alasan untuk langkah ini: Menghapus kolom yang tidak relevan akan mengurangi dimensi dataset dan mencegah data yang tidak penting memengaruhi model.
@@ -246,7 +246,7 @@ df[numerical_columns] = scaler.fit_transform(df[numerical_columns])
 print(df.head())
 ```
 
-**Hasil**
+**Hasil** <br>
 ![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/63126eb19a7c9e06cbfd3e5c47c643e4f2c7e9a6/Submission%201/assets/4.PNG)
 
 Alasan untuk langkah ini: Penskalaan sangat penting karena beberapa algoritma machine learning, seperti K-Nearest Neighbors dan Support Vector Machine (SVM), sangat terpengaruh oleh skala data. Dengan penskalaan, kita memastikan bahwa setiap fitur memiliki kontribusi yang setara pada model.
@@ -324,7 +324,7 @@ for name, model in models.items():
 for name, accuracy in results.items():
     print(f"{name}: {accuracy:.4f}")
 ```
-**Hasil**
+**Hasil** <br>
 ![Download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/63126eb19a7c9e06cbfd3e5c47c643e4f2c7e9a6/Submission%201/assets/8.PNG)
 
 Hasil akurasi untuk masing-masing model kemudian akan dibandingkan, dan model terbaik akan dipilih berdasarkan hasil akurasi tertinggi.
@@ -466,7 +466,7 @@ plt.ylabel("Model")
 plt.show()
 ```
 
-**Hasil**
+**Hasil** <br>
 ![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/63126eb19a7c9e06cbfd3e5c47c643e4f2c7e9a6/Submission%201/assets/9.png)
 
 **Penjelasan**
