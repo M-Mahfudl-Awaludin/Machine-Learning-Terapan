@@ -419,8 +419,7 @@ Pada tahap evaluasi, kita menggunakan akurasi sebagai metrik untuk menilai kiner
 Metrik Evaluasi yang Digunakan:
 
 Akurasi mengukur persentase prediksi yang benar dari total prediksi yang dilakukan.
-python
-Copy code
+```python
 from sklearn.metrics import accuracy_score
 
 # Menampilkan hasil evaluasi
@@ -436,4 +435,45 @@ plt.title("Model Comparison based on Accuracy")
 plt.xlabel("Accuracy")
 plt.ylabel("Model")
 plt.show()
+```
 Dengan plot ini, kita dapat melihat model mana yang memiliki akurasi terbaik dan memilihnya sebagai model yang optimal untuk digunakan dalam pemecahan masalah ini.
+
+Dalam proyek ini, metrik Akurasi digunakan untuk mengevaluasi kinerja setiap model klasifikasi. Akurasi merupakan salah satu metrik evaluasi yang paling umum digunakan dalam masalah klasifikasi karena memberikan gambaran umum tentang seberapa baik model dalam memprediksi kelas yang benar.
+
+Akurasi (Accuracy)
+Akurasi adalah metrik yang mengukur persentase prediksi yang benar dari total prediksi yang dilakukan oleh model. Secara matematis, akurasi dihitung dengan rumus:
+
+
+
+Di mana:
+
+- TP = True Positive (jumlah prediksi yang benar untuk kelas positif)
+- TN = True Negative (jumlah prediksi yang benar untuk kelas negatif)
+- FP = False Positive (jumlah prediksi salah untuk kelas positif)
+- FN = False Negative (jumlah prediksi salah untuk kelas negatif)
+
+Pada dasarnya, akurasi mengukur proporsi data yang benar-benar diprediksi dengan tepat oleh model.
+
+Namun, meskipun akurasi sering digunakan, ada kasus tertentu (misalnya dalam dataset yang sangat tidak seimbang) di mana akurasi tidak memberikan gambaran yang lengkap tentang kinerja model. Dalam proyek ini, karena kita mengatasi masalah klasifikasi multi-kelas (Crop_Suitability), akurasi digunakan sebagai metrik utama untuk membandingkan kinerja model.
+
+Hasil Evaluasi Berdasarkan Metrik Akurasi
+Berikut adalah hasil evaluasi yang didapatkan untuk masing-masing model:
+
+
+
+Penjelasan Hasil
+Dari hasil di atas, kita dapat melihat bahwa LightGBM memiliki akurasi tertinggi (0.1575), diikuti oleh XGBoost (0.1500), dan Gradient Boosting (0.1475). Sementara itu, model-model lainnya seperti Logistic Regression, SVM, dan Naive Bayes menunjukkan akurasi yang cukup rendah, yaitu sekitar 0.11 hingga 0.14.
+
+Hasil ini memberikan beberapa wawasan penting:
+
+LightGBM memberikan performa terbaik di antara semua model yang diuji. Ini menunjukkan bahwa model ini lebih mampu menangani data dan menghasilkan prediksi yang lebih baik dibandingkan dengan model lain.
+XGBoost dan Gradient Boosting juga memberikan akurasi yang lebih tinggi dibandingkan dengan model lainnya, yang menunjukkan bahwa kedua algoritma boosting ini efektif untuk menangani data ini.
+Sebagian besar model lainnya menunjukkan akurasi yang relatif rendah, yang bisa jadi karena beberapa faktor seperti kompleksitas model yang tidak sesuai dengan karakteristik data atau kurangnya penyesuaian parameter.
+
+### Mengapa Akurasi Digunakan?
+Akurasi digunakan di sini karena dataset yang digunakan (berbasis pada klasifikasi multi-kelas) tidak menunjukkan ketidakseimbangan yang sangat ekstrem antar kelas. Dengan kata lain, meskipun akurasi bukan selalu metrik terbaik dalam kasus data yang sangat tidak seimbang, di sini ia cukup relevan karena kelas yang diprediksi relatif merata dan akurasi memberikan gambaran umum yang cukup baik untuk membandingkan model.
+
+### Implikasi Hasil
+Berdasarkan hasil tersebut, LightGBM adalah model terbaik yang dapat digunakan untuk masalah ini, mengingat ia memberikan akurasi tertinggi. Meskipun akurasi model ini tidak terlalu tinggi, lebih tinggi dibandingkan dengan model lain, ini memberikan titik awal untuk eksperimen lebih lanjut, termasuk tuning parameter dan pengujian dengan metrik evaluasi lain, seperti precision, recall, atau F1 score, untuk mendapatkan gambaran yang lebih mendalam tentang kinerja model pada setiap kelas.
+
+---Ini adalah bagian akhir laporan---
