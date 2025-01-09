@@ -11,7 +11,7 @@ Dataset yang digunakan dalam proyek ini, yaitu Agricultural Land Suitability and
 
 **Mengapa masalah ini harus diselesaikan?** Penerapan machine learning pada data pertanian berpotensi besar untuk membantu petani memprediksi hasil panen, mengidentifikasi penyakit tanaman lebih awal, serta meningkatkan ketahanan terhadap perubahan iklim. Hal ini dapat berdampak langsung pada peningkatan produksi dan pengurangan kerugian.
 
-Referensi:
+**Referensi:**
 
 - "Machine Learning in Agriculture: A Review" - Author: John Doe, Journal of Agricultural Technology, 2020."
 - "Ravindran, C., & Kannan, P. (2020). Machine Learning Applications in Agriculture. Springer Nature."
@@ -32,14 +32,15 @@ Bagian laporan ini mencakup:
 
 ## Data Understanding
 Pada bagian ini, kita akan menjelaskan mengenai Dataset Kesesuaian Lahan Pertanian dan Kualitas Tanah yang digunakan dalam proyek ini. Dataset ini berisi informasi tentang kondisi tanah, kualitas tanah, dan kesesuaian lahan untuk berbagai jenis tanaman di Bangladesh. Dataset ini dapat digunakan untuk menganalisis berbagai faktor yang mempengaruhi potensi pertanian di wilayah tersebut, termasuk cuaca, kualitas tanah, dan jenis tanaman yang cocok untuk ditanam. Data ini diharapkan dapat membantu para peneliti, ilmuwan data, dan ahli pertanian dalam meningkatkan hasil pertanian melalui analisis yang lebih mendalam.
-- Sumber Dataset:
+### Sumber Dataset:
 Tautan ke Kaggle: [Agricultural Land Suitability and Soil Quality](https://www.kaggle.com/datasets/arifmia/agricultural-land-suitability-and-soil-quality?resource=download)
-- Deskripsi Dataset:
+
+### Deskripsi Dataset:
 Dataset ini terdiri dari 2.000 baris data dan 10 kolom yang berfokus pada kondisi tanah, kesuburan tanah, dan faktor lingkungan lainnya yang mempengaruhi kesesuaian lahan untuk pertanian. Setiap baris mewakili informasi mengenai satu lokasi pertanian tertentu di Bangladesh.
 
-###Deskripsi Variabel
-Berikut adalah deskripsi lengkap dari variabel atau fitur yang terdapat dalam dataset ini:
+### Deskripsi Variabel
 
+Berikut adalah deskripsi lengkap dari variabel atau fitur yang terdapat dalam dataset ini:
 1. Location
 - Tipe: Kategorikal
 - Deskripsi: Lokasi geografis dari lahan pertanian (misalnya, Dhaka, Barishal). Lokasi ini dapat mempengaruhi iklim dan kondisi tanah, yang penting untuk menentukan tanaman yang sesuai.
@@ -160,8 +161,10 @@ Hasil :
 ![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/8a6949d1a4c55ad2b6f6647388079ce99b40db50/Submission%201/assets/Heatmap%20of%20Correlation%20Matrix.png)
 
 ## Data Preparation
+
 1. Label Encoding pada Kolom Kategorikal
 Langkah pertama dalam persiapan data adalah menangani data kategorikal. Karena sebagian besar algoritma machine learning memerlukan input numerik, maka variabel kategorikal diubah menjadi nilai numerik menggunakan LabelEncoder dari sklearn.preprocessing.
+**Kode**
 
 ```python
 from sklearn.preprocessing import LabelEncoder
@@ -178,12 +181,15 @@ for column in categorical_columns:
 # Menampilkan dataset yang telah di-encode
 print(df.head())
 ```
+**Hasil :**
+![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/63126eb19a7c9e06cbfd3e5c47c643e4f2c7e9a6/Submission%201/assets/1.PNG)
 
 Alasan untuk langkah ini: Label encoding diperlukan untuk mengubah fitur kategorikal (misalnya 'Location', 'Soil_Type', dll.) menjadi nilai numerik. Hal ini memudahkan algoritma machine learning untuk memproses data tersebut.
 
 2. Konversi Tanggal
 Langkah berikutnya adalah menangani fitur Satellite_Observation_Date, yang merupakan kolom tanggal berupa string. Kolom ini dikonversi menjadi tipe datetime agar lebih mudah untuk mengekstrak komponen-komponen waktu seperti Year, Month, dan Day.
 
+**Kode**
 ```python
 # Mengonversi 'Satellite_Observation_Date' menjadi datetime
 df['Satellite_Observation_Date'] = pd.to_datetime(df['Satellite_Observation_Date'])
@@ -196,11 +202,15 @@ df['Day'] = df['Satellite_Observation_Date'].dt.day
 # Menampilkan dataset yang telah diperbarui
 print(df[['Satellite_Observation_Date', 'Year', 'Month', 'Day']].head())
 ```
+**Hasil**
+![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/63126eb19a7c9e06cbfd3e5c47c643e4f2c7e9a6/Submission%201/assets/2.PNG)
 
 Alasan untuk langkah ini: Fitur tanggal sering kali berguna untuk mengekstrak pola berbasis waktu atau musiman. Dengan memecah tanggal menjadi komponen tahun, bulan, dan hari, kita membuatnya lebih mudah diproses oleh model.
 
 3. Menghapus Kolom yang Tidak Relevan
 Setelah itu, kita menghapus kolom Satellite_Observation_Date dan Day karena kita tidak lagi memerlukan informasi tanggal asli dan sudah mengekstrak detail yang relevan ke dalam kolom terpisah.
+
+**Kode**
 
 ```python
 # Menghapus kolom 'Satellite_Observation_Date' dan 'Day'
@@ -209,10 +219,16 @@ df = df.drop(columns=['Satellite_Observation_Date', 'Day'])
 # Menampilkan dataset yang telah diperbarui
 print(df.head())
 ```
+
+**Hasil**
+![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/63126eb19a7c9e06cbfd3e5c47c643e4f2c7e9a6/Submission%201/assets/3.PNG)
+
 Alasan untuk langkah ini: Menghapus kolom yang tidak relevan akan mengurangi dimensi dataset dan mencegah data yang tidak penting memengaruhi model.
 
 4. Penskalaan Fitur Numerik
 Langkah selanjutnya adalah melakukan penskalaan pada fitur numerik menggunakan Min-Max scaling. Penskalaan penting dilakukan agar semua fitur numerik berada dalam skala yang sama, yang sangat penting untuk algoritma seperti K-Nearest Neighbors, SVM, dan Gradient Boosting.
+
+**Kode**
 
 ```python
 from sklearn.preprocessing import MinMaxScaler
@@ -229,10 +245,16 @@ df[numerical_columns] = scaler.fit_transform(df[numerical_columns])
 # Menampilkan dataset yang telah diskalakan
 print(df.head())
 ```
+
+**Hasil**
+![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/63126eb19a7c9e06cbfd3e5c47c643e4f2c7e9a6/Submission%201/assets/4.PNG)
+
 Alasan untuk langkah ini: Penskalaan sangat penting karena beberapa algoritma machine learning, seperti K-Nearest Neighbors dan Support Vector Machine (SVM), sangat terpengaruh oleh skala data. Dengan penskalaan, kita memastikan bahwa setiap fitur memiliki kontribusi yang setara pada model.
 
 5. Pembagian Dataset (Train-Test Split)
 Setelah mempersiapkan data, kita perlu membagi dataset menjadi data pelatihan (training) dan data pengujian (test). Ini bertujuan agar model dapat dilatih dengan data pelatihan dan diuji pada data yang tidak terlihat sebelumnya untuk mengukur kinerjanya.
+
+**Kode**
 
 ```python
 from sklearn.model_selection import train_test_split
@@ -244,6 +266,7 @@ y = df['Crop_Suitability']  # Target
 # Membagi dataset menjadi data pelatihan dan data pengujian (80% untuk training, 20% untuk testing)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 ```
+
 Alasan untuk langkah ini: Pembagian data menjadi data pelatihan dan data pengujian memastikan bahwa model dapat diuji pada data yang tidak digunakan selama pelatihan, sehingga memberikan evaluasi yang lebih objektif.
 Dengan langkah-langkah ini, dataset sudah siap untuk tahap pemodelan.
 
@@ -262,6 +285,7 @@ XGBoost
 LightGBM
 Model-model ini diuji pada data pelatihan dan diuji akurasinya pada data pengujian.
 
+**Kode**
 ```python
 from sklearn.metrics import accuracy_score
 from sklearn.linear_model import LogisticRegression
@@ -300,6 +324,9 @@ for name, model in models.items():
 for name, accuracy in results.items():
     print(f"{name}: {accuracy:.4f}")
 ```
+**Hasil**
+![Download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/63126eb19a7c9e06cbfd3e5c47c643e4f2c7e9a6/Submission%201/assets/8.PNG)
+
 Hasil akurasi untuk masing-masing model kemudian akan dibandingkan, dan model terbaik akan dipilih berdasarkan hasil akurasi tertinggi.
 Penjelasan Model Algoritma
 1. Logistic Regression
@@ -416,9 +443,11 @@ Penjelasan Model Algoritma
 
 Pada tahap evaluasi, kita menggunakan akurasi sebagai metrik untuk menilai kinerja masing-masing model.
 
-Metrik Evaluasi yang Digunakan:
+### Metrik Evaluasi yang Digunakan:
 
 Akurasi mengukur persentase prediksi yang benar dari total prediksi yang dilakukan.
+**Kode**
+
 ```python
 from sklearn.metrics import accuracy_score
 
@@ -436,14 +465,19 @@ plt.xlabel("Accuracy")
 plt.ylabel("Model")
 plt.show()
 ```
+
+**Hasil**
+![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/63126eb19a7c9e06cbfd3e5c47c643e4f2c7e9a6/Submission%201/assets/9.png)
+
+**Penjelasan**
 Dengan plot ini, kita dapat melihat model mana yang memiliki akurasi terbaik dan memilihnya sebagai model yang optimal untuk digunakan dalam pemecahan masalah ini.
 
 Dalam proyek ini, metrik Akurasi digunakan untuk mengevaluasi kinerja setiap model klasifikasi. Akurasi merupakan salah satu metrik evaluasi yang paling umum digunakan dalam masalah klasifikasi karena memberikan gambaran umum tentang seberapa baik model dalam memprediksi kelas yang benar.
 
-Akurasi (Accuracy)
+**Akurasi (Accuracy)**
 Akurasi adalah metrik yang mengukur persentase prediksi yang benar dari total prediksi yang dilakukan oleh model. Secara matematis, akurasi dihitung dengan rumus:
 
-
+![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/63126eb19a7c9e06cbfd3e5c47c643e4f2c7e9a6/Submission%201/assets/10.PNG)
 
 Di mana:
 
@@ -456,18 +490,18 @@ Pada dasarnya, akurasi mengukur proporsi data yang benar-benar diprediksi dengan
 
 Namun, meskipun akurasi sering digunakan, ada kasus tertentu (misalnya dalam dataset yang sangat tidak seimbang) di mana akurasi tidak memberikan gambaran yang lengkap tentang kinerja model. Dalam proyek ini, karena kita mengatasi masalah klasifikasi multi-kelas (Crop_Suitability), akurasi digunakan sebagai metrik utama untuk membandingkan kinerja model.
 
-Hasil Evaluasi Berdasarkan Metrik Akurasi
+**Hasil Evaluasi Berdasarkan Metrik Akurasi**
 Berikut adalah hasil evaluasi yang didapatkan untuk masing-masing model:
 
+![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/63126eb19a7c9e06cbfd3e5c47c643e4f2c7e9a6/Submission%201/assets/11.PNG)
 
-
-Penjelasan Hasil
+**Penjelasan Hasil**
 Dari hasil di atas, kita dapat melihat bahwa LightGBM memiliki akurasi tertinggi (0.1575), diikuti oleh XGBoost (0.1500), dan Gradient Boosting (0.1475). Sementara itu, model-model lainnya seperti Logistic Regression, SVM, dan Naive Bayes menunjukkan akurasi yang cukup rendah, yaitu sekitar 0.11 hingga 0.14.
 
 Hasil ini memberikan beberapa wawasan penting:
 
-LightGBM memberikan performa terbaik di antara semua model yang diuji. Ini menunjukkan bahwa model ini lebih mampu menangani data dan menghasilkan prediksi yang lebih baik dibandingkan dengan model lain.
-XGBoost dan Gradient Boosting juga memberikan akurasi yang lebih tinggi dibandingkan dengan model lainnya, yang menunjukkan bahwa kedua algoritma boosting ini efektif untuk menangani data ini.
+- LightGBM memberikan performa terbaik di antara semua model yang diuji. Ini menunjukkan bahwa model ini lebih mampu menangani data dan menghasilkan prediksi yang lebih baik dibandingkan dengan model lain.
+- XGBoost dan Gradient Boosting juga memberikan akurasi yang lebih tinggi dibandingkan dengan model lainnya, yang menunjukkan bahwa kedua algoritma boosting ini efektif untuk menangani data ini.
 Sebagian besar model lainnya menunjukkan akurasi yang relatif rendah, yang bisa jadi karena beberapa faktor seperti kompleksitas model yang tidak sesuai dengan karakteristik data atau kurangnya penyesuaian parameter.
 
 ### Mengapa Akurasi Digunakan?
