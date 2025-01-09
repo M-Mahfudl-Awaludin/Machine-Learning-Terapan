@@ -81,7 +81,7 @@ Hasil :
 - Tujuan: Menampilkan distribusi nilai indeks kesuburan tanah.
 - Penjelasan: Histogram ini menunjukkan penyebaran nilai indeks kesuburan pada berbagai lokasi dalam dataset. Jika distribusinya miring atau terdapat puncak tertentu, ini dapat menunjukkan tingkat kesuburan tanah yang dominan di daerah tersebut.
 Hasil :
-![gambar]([Submission 1/assets/Crop_Suitability.png](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/bbdb774b50ef3ecc9a600f18ea79f65f8066dfb1/Submission%201/assets/Crop_Suitability.png))
+![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/bbdb774b50ef3ecc9a600f18ea79f65f8066dfb1/Submission%201/assets/Crop_Suitability.png)
 
 3. Histogram: Distribusi Curah Hujan Rata-rata
 - Tujuan: Menampilkan distribusi curah hujan rata-rata dalam milimeter per tahun.
