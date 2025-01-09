@@ -73,122 +73,78 @@ Untuk lebih memahami dataset ini, dilakukan visualisasi & eksplorasi data (EDA) 
 1. Bar Plot: Kesesuaian Tanaman vs Indeks Kesuburan
 - Tujuan: Visualisasi hubungan antara kesesuaian tanaman dan indeks kesuburan.
 - Penjelasan: Bar plot ini menggambarkan bagaimana kesuburan tanah (indeks kesuburan) terkait dengan kesesuaian tanaman yang dapat ditanam di wilayah tersebut. Ini memberikan gambaran tentang jenis tanaman yang lebih cocok untuk tanah yang lebih subur.
-```python
-sns.barplot(x='Crop_Suitability', y='Fertility_Index', data=df)
-plt.title('Crop Suitability in Charghat')
-plt.show()
-```
+
 Hasil :
-[gambar]([Submission 1/assets/Crop_Suitability.png](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/bbdb774b50ef3ecc9a600f18ea79f65f8066dfb1/Submission%201/assets/Crop_Suitability.png))
+![gambar]([Submission 1/assets/Crop_Suitability.png](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/bbdb774b50ef3ecc9a600f18ea79f65f8066dfb1/Submission%201/assets/Crop_Suitability.png))
+
 2. Histogram: Distribusi Indeks Kesuburan
-Tujuan: Menampilkan distribusi nilai indeks kesuburan tanah.
-Penjelasan: Histogram ini menunjukkan penyebaran nilai indeks kesuburan pada berbagai lokasi dalam dataset. Jika distribusinya miring atau terdapat puncak tertentu, ini dapat menunjukkan tingkat kesuburan tanah yang dominan di daerah tersebut.
-python
-Copy code
-sns.histplot(df['Fertility_Index'], kde=True, color='skyblue', bins=20)
-plt.title('Distribution of Fertility Index')
-plt.xlabel('Fertility Index')
-plt.ylabel('Frequency')
-plt.show()
+- Tujuan: Menampilkan distribusi nilai indeks kesuburan tanah.
+- Penjelasan: Histogram ini menunjukkan penyebaran nilai indeks kesuburan pada berbagai lokasi dalam dataset. Jika distribusinya miring atau terdapat puncak tertentu, ini dapat menunjukkan tingkat kesuburan tanah yang dominan di daerah tersebut.
+Hasil :
+![gambar]([Submission 1/assets/Crop_Suitability.png](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/bbdb774b50ef3ecc9a600f18ea79f65f8066dfb1/Submission%201/assets/Crop_Suitability.png))
+
 3. Histogram: Distribusi Curah Hujan Rata-rata
-Tujuan: Menampilkan distribusi curah hujan rata-rata dalam milimeter per tahun.
-Penjelasan: Histogram ini menggambarkan berapa banyak lokasi yang mengalami curah hujan tertentu. Data ini bisa membantu menganalisis faktor cuaca yang memengaruhi kesuburan tanah.
-python
-Copy code
-sns.histplot(df['Average_Rainfall(mm)'], kde=True, color='orange', bins=20)
-plt.title('Distribution of Average Rainfall (mm)')
-plt.xlabel('Average Rainfall (mm)')
-plt.ylabel('Frequency')
-plt.show()
+- Tujuan: Menampilkan distribusi curah hujan rata-rata dalam milimeter per tahun.
+- Penjelasan: Histogram ini menggambarkan berapa banyak lokasi yang mengalami curah hujan tertentu. Data ini bisa membantu menganalisis faktor cuaca yang memengaruhi kesuburan tanah.
+Hasil :
+![gambar]([Submission 1/assets/Crop_Suitability.png](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/bbdb774b50ef3ecc9a600f18ea79f65f8066dfb1/Submission%201/assets/Crop_Suitability.png))
+
 4. Histogram: Distribusi Suhu Rata-rata
-Tujuan: Menampilkan distribusi suhu rata-rata di berbagai lokasi.
-Penjelasan: Suhu rata-rata dapat memengaruhi tipe tanaman yang sesuai untuk ditanam. Visualisasi ini memberi wawasan tentang variabilitas suhu di wilayah yang berbeda.
-python
-Copy code
-sns.histplot(df['Temperature(°C)'], kde=True, color='green', bins=20)
-plt.title('Distribution of Temperature (°C)')
-plt.xlabel('Temperature (°C)')
-plt.ylabel('Frequency')
-plt.show()
+- Tujuan: Menampilkan distribusi suhu rata-rata di berbagai lokasi.
+- Penjelasan: Suhu rata-rata dapat memengaruhi tipe tanaman yang sesuai untuk ditanam. Visualisasi ini memberi wawasan tentang variabilitas suhu di wilayah yang berbeda.
+Hasil :
+![gambar]([Submission 1/assets/Crop_Suitability.png](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/bbdb774b50ef3ecc9a600f18ea79f65f8066dfb1/Submission%201/assets/Crop_Suitability.png))
+
 5. Pairplot: Hubungan antara Variabel
-Tujuan: Memvisualisasikan hubungan antara berbagai variabel dalam dataset, dengan warna berdasarkan kesesuaian tanaman.
-Penjelasan: Pairplot ini memungkinkan kita untuk melihat pola-pola distribusi data dan hubungan antar variabel secara langsung. Misalnya, kita dapat melihat apakah suhu berhubungan dengan curah hujan atau indeks kesuburan dalam konteks kesesuaian tanaman.
-python
-Copy code
-sns.pairplot(df, hue='Crop_Suitability', palette='viridis')
-plt.suptitle('Pairplot of Variables by Crop Suitability', y=1.02)
-plt.show()
+- Tujuan: Memvisualisasikan hubungan antara berbagai variabel dalam dataset, dengan warna berdasarkan kesesuaian tanaman.
+- Penjelasan: Pairplot ini memungkinkan kita untuk melihat pola-pola distribusi data dan hubungan antar variabel secara langsung. Misalnya, kita dapat melihat apakah suhu berhubungan dengan curah hujan atau indeks kesuburan dalam konteks kesesuaian tanaman.
+Hasil :
+![gambar]([Submission 1/assets/Crop_Suitability.png](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/bbdb774b50ef3ecc9a600f18ea79f65f8066dfb1/Submission%201/assets/Crop_Suitability.png))
+
 6. Heatmap Korelasi
-Tujuan: Menggambarkan korelasi antar variabel numerik seperti indeks kesuburan, curah hujan, dan suhu.
-Penjelasan: Heatmap ini menunjukkan hubungan linear antara variabel-variabel tersebut. Korelasi positif atau negatif yang kuat dapat memberikan wawasan tentang faktor-faktor yang berpengaruh terhadap kesuburan tanah.
-python
-Copy code
-correlation = df[['Fertility_Index', 'Average_Rainfall(mm)', 'Temperature(°C)']].corr()
-sns.heatmap(correlation, annot=True, cmap='coolwarm', linewidths=1)
-plt.title('Correlation Heatmap')
-plt.show()
+- Tujuan: Menggambarkan korelasi antar variabel numerik seperti indeks kesuburan, curah hujan, dan suhu.
+- Penjelasan: Heatmap ini menunjukkan hubungan linear antara variabel-variabel tersebut. Korelasi positif atau negatif yang kuat dapat memberikan wawasan tentang faktor-faktor yang berpengaruh terhadap kesuburan tanah.
+Hasil :
+![gambar]([Submission 1/assets/Crop_Suitability.png](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/bbdb774b50ef3ecc9a600f18ea79f65f8066dfb1/Submission%201/assets/Crop_Suitability.png))
+
 7. Boxplot: Tipe Tanah vs Indeks Kesuburan
-Tujuan: Menganalisis perbedaan indeks kesuburan berdasarkan tipe tanah.
-Penjelasan: Boxplot ini menunjukkan bagaimana distribusi nilai indeks kesuburan berbeda-beda untuk tiap tipe tanah. Ini bisa membantu menentukan jenis tanah mana yang paling subur atau membutuhkan perhatian lebih.
-python
-Copy code
-sns.boxplot(x='Soil_Type', y='Fertility_Index', data=df, palette='Set2')
-plt.title('Soil Type vs Fertility Index')
-plt.show()
+- Tujuan: Menganalisis perbedaan indeks kesuburan berdasarkan tipe tanah.
+- Penjelasan: Boxplot ini menunjukkan bagaimana distribusi nilai indeks kesuburan berbeda-beda untuk tiap tipe tanah. Ini bisa membantu menentukan jenis tanah mana yang paling subur atau membutuhkan perhatian lebih.
+Hasil :
+![gambar]([Submission 1/assets/Crop_Suitability.png](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/bbdb774b50ef3ecc9a600f18ea79f65f8066dfb1/Submission%201/assets/Crop_Suitability.png))
+
 8. Countplot: Frekuensi Kategori 'Remarks'
-Tujuan: Menampilkan jumlah data yang terdapat pada tiap kategori Remarks.
-Penjelasan: Countplot ini menunjukkan seberapa sering tiap kategori remarks muncul. Hal ini memberikan gambaran tentang seberapa banyak lokasi pertanian yang memiliki catatan khusus atau peringatan.
-python
-Copy code
-sns.countplot(x='Remarks', data=df, palette='Set1')
-plt.title('Frequency of Remarks Categories')
-plt.show()
+- Tujuan: Menampilkan jumlah data yang terdapat pada tiap kategori Remarks.
+- Penjelasan: Countplot ini menunjukkan seberapa sering tiap kategori remarks muncul. Hal ini memberikan gambaran tentang seberapa banyak lokasi pertanian yang memiliki catatan khusus atau peringatan.
+Hasil :
+![gambar]([Submission 1/assets/Crop_Suitability.png](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/bbdb774b50ef3ecc9a600f18ea79f65f8066dfb1/Submission%201/assets/Crop_Suitability.png))
+
 9. Trend Kesesuaian Tanaman Berdasarkan Tahun
-Tujuan: Menampilkan tren kesesuaian tanaman selama periode waktu berdasarkan tanggal observasi satelit.
-Penjelasan: Menggunakan visualisasi ini, kita dapat melihat perubahan tren kesesuaian tanaman sepanjang tahun dan apakah ada pola musiman atau perubahan akibat faktor lingkungan.
-python
-Copy code
-df['Satellite_Observation_Date'] = pd.to_datetime(df['Satellite_Observation_Date'])
-df['Year'] = df['Satellite_Observation_Date'].dt.year
-sns.countplot(x='Year', hue='Crop_Suitability', data=df, palette='coolwarm')
-plt.title('Crop Suitability Trends Over the Years')
-plt.show()
+- Tujuan: Menampilkan tren kesesuaian tanaman selama periode waktu berdasarkan tanggal observasi satelit.
+- Penjelasan: Menggunakan visualisasi ini, kita dapat melihat perubahan tren kesesuaian tanaman sepanjang tahun dan apakah ada pola musiman atau perubahan akibat faktor lingkungan.
+Hasil :
+![gambar]([Submission 1/assets/Crop_Suitability.png](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/bbdb774b50ef3ecc9a600f18ea79f65f8066dfb1/Submission%201/assets/Crop_Suitability.png))
+
 10. Pie Chart: Distribusi Jenis Tanah
-Tujuan: Menampilkan distribusi proporsi dari masing-masing tipe tanah dalam dataset.
-Penjelasan: Pie chart ini menunjukkan persentase masing-masing tipe tanah yang terdapat dalam dataset, memberi gambaran umum mengenai kondisi tanah di Bangladesh.
-python
-Copy code
-soil_type_counts = df['Soil_Type'].value_counts()
-plt.pie(soil_type_counts, labels=soil_type_counts.index, autopct='%1.1f%%', colors=sns.color_palette("Set3", len(soil_type_counts)))
-plt.title('Distribution of Soil Type')
-plt.show()
+- Tujuan: Menampilkan distribusi proporsi dari masing-masing tipe tanah dalam dataset.
+- Penjelasan: Pie chart ini menunjukkan persentase masing-masing tipe tanah yang terdapat dalam dataset, memberi gambaran umum mengenai kondisi tanah di Bangladesh.
+Hasil :
+![gambar]([Submission 1/assets/Crop_Suitability.png](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/bbdb774b50ef3ecc9a600f18ea79f65f8066dfb1/Submission%201/assets/Crop_Suitability.png))
+
 11. Violin Plot: Indeks Kesuburan Berdasarkan Kesesuaian Tanaman
-Tujuan: Menampilkan distribusi indeks kesuburan berdasarkan kesesuaian tanaman.
-Penjelasan: Violin plot ini memberikan gambaran mengenai distribusi kesuburan tanah untuk berbagai jenis tanaman, yang dapat menunjukkan perbedaan dalam kualitas tanah yang cocok untuk tanaman tertentu.
-python
-Copy code
-sns.violinplot(x='Crop_Suitability', y='Fertility_Index', data=df, palette='coolwarm')
-plt.title('Violin Plot: Fertility Index by Crop Suitability')
-plt.xlabel('Crop Suitability')
-plt.ylabel('Fertility Index')
-plt.show()
+- Tujuan: Menampilkan distribusi indeks kesuburan berdasarkan kesesuaian tanaman.
+- Penjelasan: Violin plot ini memberikan gambaran mengenai distribusi kesuburan tanah untuk berbagai jenis tanaman, yang dapat menunjukkan perbedaan dalam kualitas tanah yang cocok untuk tanaman tertentu.
+Hasil :
+![gambar]([Submission 1/assets/Crop_Suitability.png](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/bbdb774b50ef3ecc9a600f18ea79f65f8066dfb1/Submission%201/assets/Crop_Suitability.png))
+
 12. Scatter Plot: Hubungan Curah Hujan vs Suhu
-Tujuan: Menampilkan hubungan antara curah hujan dan suhu untuk lokasi yang berbeda.
-Penjelasan: Scatter plot ini membantu mengidentifikasi apakah ada pola atau korelasi antara curah hujan dan suhu yang dapat mempengaruhi kesesuaian tanaman.
-python
-Copy code
-sns.scatterplot(x='Average_Rainfall(mm)', y='Temperature(°C)', data=df, hue='Crop_Suitability', palette='viridis')
-plt.title('Scatter Plot: Average Rainfall vs Temperature')
-plt.xlabel('Average Rainfall (mm)')
-plt.ylabel('Temperature (°C)')
-plt.legend(title='Crop Suitability')
-plt.show()
+- Tujuan: Menampilkan hubungan antara curah hujan dan suhu untuk lokasi yang berbeda.
+- Penjelasan: Scatter plot ini membantu mengidentifikasi apakah ada pola atau korelasi antara curah hujan dan suhu yang dapat mempengaruhi kesesuaian tanaman.
+Hasil :
+![gambar]([Submission 1/assets/Crop_Suitability.png](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/bbdb774b50ef3ecc9a600f18ea79f65f8066dfb1/Submission%201/assets/Crop_Suitability.png))
+
 13. Heatmap Korelasi Matriks
-Tujuan: Menampilkan hubungan korelasi yang lebih mendalam antar variabel numerik.
-Penjelasan: Heatmap ini membantu kita memahami seberapa kuat hubungan antara faktor-faktor seperti indeks kesuburan, curah hujan, dan suhu, yang dapat memengaruhi hasil pertanian di Bangladesh.
-python
-Copy code
-correlation_matrix = df[['Fertility_Index', 'Average_Rainfall(mm)', 'Temperature(°C)']].corr()
-sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt='.2f', linewidths=0.5)
-plt.title('Heatmap of Correlation Matrix')
-plt.show()
+- Tujuan: Menampilkan hubungan korelasi yang lebih mendalam antar variabel numerik.
+- Penjelasan: Heatmap ini membantu kita memahami seberapa kuat hubungan antara faktor-faktor seperti indeks kesuburan, curah hujan, dan suhu, yang dapat memengaruhi hasil pertanian di Bangladesh.
+Hasil :
+![gambar]([Submission 1/assets/Crop_Suitability.png](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/bbdb774b50ef3ecc9a600f18ea79f65f8066dfb1/Submission%201/assets/Crop_Suitability.png))
