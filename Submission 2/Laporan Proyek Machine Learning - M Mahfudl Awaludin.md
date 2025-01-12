@@ -215,25 +215,40 @@ Langkah selanjutnya adalah melakukan pengecekan dan penanganan nilai yang hilang
 ### Modeling
 Pada tahap ini, kita akan membahas dua pendekatan berbeda yang digunakan untuk membuat sistem rekomendasi tempat wisata. Pendekatan pertama adalah Collaborative Filtering yang berbasis pada teknik Matrix Factorization menggunakan SVD (Singular Value Decomposition), dan pendekatan kedua adalah Content-Based Filtering, yang menggunakan informasi tentang fitur tempat wisata untuk memberikan rekomendasi.
 
-- Collaborative Filtering dengan SVD
-Sistem rekomendasi berbasis Collaborative Filtering berfungsi dengan menganalisis pola preferensi yang diberikan oleh pengguna terhadap tempat wisata tertentu. Dalam hal ini, kita menggunakan Matrix Factorization dengan SVD (Singular Value Decomposition) untuk memperkirakan rating yang akan diberikan oleh pengguna terhadap tempat wisata yang belum pernah dinilai.
+***1. Content-Based Filtering:***
+Pada model ini, kita menggunakan informasi tentang kategori kota dan deskripsi dari tempat wisata untuk memberikan rekomendasi. Pendekatan ini bergantung pada fitur konten dari item (dalam hal ini adalah tempat wisata) yang dibandingkan dengan preferensi pengguna.
 
-    Langkah-langkah:
+Langkah-langkah Model Content-Based Filtering:
 
-1. Membuat Matriks Pengguna-Tempat Wisata: Matriks ini akan menggambarkan interaksi antara pengguna dengan tempat wisata berdasarkan rating yang diberikan oleh pengguna pada setiap tempat wisata. Kita membangun matriks pengguna-tempat wisata dari dataset tourism_rating.csv.
+1. Vectorization menggunakan CountVectorizer:
+Kita menggunakan CountVectorizer dari scikit-learn untuk mengubah kolom city_category (kategori kota) menjadi representasi numerik berbasis frekuensi kata.
 
     ```python
-    import pandas as pd
-    from scipy.sparse.linalg import svds
+    from sklearn.feature_extraction.text import CountVectorizer
     
-    rating_matrix = tourism_rating.pivot(index='User_Id', columns='Place_Id', values='Rating').fillna(0)
-    ```
-2. Melakukan Singular Value Decomposition (SVD): Kita menggunakan teknik SVD untuk mendekomposisi matriks rating menjadi tiga matriks: matriks pengguna, matriks singular, dan matriks tempat wisata. Hasil dekomposisi ini memungkinkan kita untuk memprediksi rating yang mungkin diberikan oleh pengguna untuk tempat wisata yang belum dinilai.
+    cv = CountVectorizer()
+    cv.fit(data['city_category'])
+    
+    # Menampilkan nama-nama fitur
+    print("Features Name: ", list(cv.vocabulary_.keys()))
+    
+    # Mentransformasi data menjadi matriks
+    cv_matrix = cv.transform(data['city_category'])
+    print(cv_matrix.shape)
+    
+    # Menampilkan matriks yang telah diubah
+    cv_matrix.todense()
+        ```
+2. Menghitung Cosine Similarity:
+Menggunakan Cosine Similarity untuk menghitung seberapa mirip setiap tempat wisata berdasarkan kategori kota mereka.
 
     ```python
-    U, sigma, Vt = svds(rating_matrix.values, k=50)
-    sigma = np.diag(sigma)
-    predicted_ratings = np.dot(np.dot(U, sigma), Vt)
+   from sklearn.metrics.pairwise import cosine_similarity
+
+    cosine_sim = cosine_similarity(cv_matrix)
+    cosine_sim_df = pd.DataFrame(cosine_sim, index=data['name'], columns=data['name'])
+    cosine_sim_df.sample(5, axis=1).sample(10, axis=0)
+
     ```
 
 3. Rekomendasi untuk Pengguna: Setelah mendapatkan prediksi rating, kita dapat memberikan rekomendasi tempat wisata untuk setiap pengguna dengan memilih tempat wisata yang memiliki rating tertinggi.
@@ -243,11 +258,27 @@ Sistem rekomendasi berbasis Collaborative Filtering berfungsi dengan menganalisi
     user_predictions = predicted_ratings_df.iloc[0]  # Misalnya untuk pengguna pertama
     recommendations = user_predictions.sort_values(ascending=False).head(10)
     ```
-4. Top-N Recommendations: Untuk menyajikan rekomendasi terbaik, kita mengambil 10 tempat wisata teratas berdasarkan prediksi rating.
+4. Membuat Fungsi Rekomendasi:
+Fungsi generate_candidates digunakan untuk memberikan rekomendasi tempat wisata berdasarkan kota dan harga yang diberikan oleh pengguna.
 
     ```python
-    top_n_recommendations = recommendations.index.tolist()  # Daftar ID tempat wisata teratas
+        def generate_candidates(city=None, max_price=None, items=data[['id', 'name','category', 'description', 'city', 'price']]):
+        filtered_items = items
+        if city:
+            filtered_items = filtered_items[filtered_items['city'] == city]
+        if max_price:
+            filtered_items = filtered_items[filtered_items['price'] <= max_price]
+        return filtered_items
+
     ```
+
+    ***Contoh penggunaan:***
+   ```python
+   generate_candidates("Surabaya", 110000).head(5)
+    ```
+   ***Output***
+   ![download]()
+   
     ***Kelebihan dan Kekurangan SVD (Collaborative Filtering)***
     Kelebihan:
     - Menggunakan data interaksi pengguna tanpa memerlukan informasi eksplisit tentang konten.
@@ -257,40 +288,85 @@ Sistem rekomendasi berbasis Collaborative Filtering berfungsi dengan menganalisi
     - Memerlukan dataset besar untuk bekerja dengan baik. Jika jumlah rating sangat sedikit, hasilnya mungkin tidak akurat.
     - Tidak dapat memberikan rekomendasi untuk pengguna baru (cold start problem) yang belum memberikan rating.
     
-- Content-Based Filtering
-Pendekatan Content-Based Filtering memberikan rekomendasi berdasarkan kesamaan konten antara tempat wisata yang telah dinilai oleh pengguna dengan tempat wisata lain yang ada di dataset. Dalam hal ini, kita menggunakan fitur tempat wisata seperti kategori, kota, dan deskripsi untuk menghitung kesamaan antara tempat wisata yang sudah dinilai dengan tempat wisata lainnya.
+***2. Collaborative Filtering:***
+Pada model ini, kita menggunakan teknik Collaborative Filtering yang lebih berfokus pada interaksi pengguna dengan item (rating). Model ini menggunakan data dari user ratings dan memanfaatkan embedding layers untuk memetakan pengguna dan tempat wisata ke dalam ruang vektor yang lebih kecil.
 
-    Langkah-langkah:
-1. Membangun Representasi Fitur untuk Setiap Tempat Wisata: Kita menggabungkan kolom-kolom seperti Category, City, dan Description untuk membuat representasi fitur dari setiap tempat wisata. Representasi fitur ini akan digunakan untuk menghitung kesamaan antar tempat wisata.
-
-    ```python
-    from sklearn.feature_extraction.text import TfidfVectorizer
-    
-    tfidf = TfidfVectorizer(stop_words='english')
-    combined_features = tourism_new['category'] + ' ' + tourism_new['city_category'] + ' ' + tourism_new['description']
-    tfidf_matrix = tfidf.fit_transform(combined_features)
-    ```
-2. Menghitung Kesamaan Antar Tempat Wisata (Cosine Similarity): Dengan menggunakan matriks TF-IDF yang sudah dibangun, kita dapat menghitung kesamaan antara setiap pasangan tempat wisata menggunakan Cosine Similarity.
+Langkah-langkah Model Collaborative Filtering:
+1. Preprocessing Data:
+Mengubah ID pengguna dan tempat menjadi nilai numerik menggunakan encoding.
 
     ```python
-    from sklearn.metrics.pairwise import cosine_similarity
+   # Mengonversi User dan Place ke format numerik
+    user_ids = df.User_Id.unique().tolist()
+    user_to_user_encoded = {x:i for i, x in enumerate(user_ids)}
+    place_ids = df.Place_Id.unique().tolist()
+    place_to_place_encoded = {x:i for i, x in enumerate(place_ids)}
     
-    cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
+    df['user'] = df.User_Id.map(user_to_user_encoded)
+    df['place'] = df.Place_Id.map(place_to_place_encoded)
     ```
-
-3. Memberikan Rekomendasi Berdasarkan Kesamaan: Setelah menghitung kesamaan antar tempat wisata, kita bisa memberikan rekomendasi dengan memilih tempat wisata yang paling mirip dengan tempat wisata yang sudah dinilai oleh pengguna.
+2. Membagi Data Menjadi Data Latih dan Validasi:
+Memisahkan data menjadi dua set: satu untuk pelatihan (train) dan satu lagi untuk validasi (val).
 
     ```python
-    def get_recommendations(place_id, cosine_sim, top_n=10):
-        idx = tourism_new[tourism_new['id'] == place_id].index[0]
-        sim_scores = list(enumerate(cosine_sim[idx]))
-        sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-        sim_scores = sim_scores[1:top_n+1]
-        place_indices = [i[0] for i in sim_scores]
-        return tourism_new['name'].iloc[place_indices]
+   x = df[['user', 'place']].values
+    y = df['Place_Ratings'].apply(lambda x: (x - min_rating) / (max_rating - min_rating)).values
     
-    top_n_recommendations_content_based = get_recommendations(1, cosine_sim, top_n=10)
+    train_indices = int(0.8 * df.shape[0])
+    x_train, x_val = x[:train_indices], x[train_indices:]
+    y_train, y_val = y[:train_indices], y[train_indices:]
+    )
     ```
+
+3. Membangun Model Neural Network untuk Collaborative Filtering:
+Menggunakan TensorFlow dan Keras untuk membuat model berbasis neural network dengan layer embedding untuk pengguna dan tempat wisata.
+
+    ```python
+    class RecommenderNet(tf.keras.Model):
+    def __init__(self, num_users, num_place, embedding_size, **kwargs):
+        super(RecommenderNet, self).__init__(**kwargs)
+        self.num_users = num_users
+        self.num_place = num_place
+        self.embedding_size = embedding_size
+        self.user_embedding = layers.Embedding(num_users, embedding_size, embeddings_initializer='he_normal')
+        self.place_embedding = layers.Embedding(num_place, embedding_size, embeddings_initializer='he_normal')
+        self.user_bias = layers.Embedding(num_users, 1)
+        self.place_bias = layers.Embedding(num_place, 1)
+    
+    def call(self, inputs):
+        user_vector = self.user_embedding(inputs[:, 0])
+        place_vector = self.place_embedding(inputs[:, 1])
+        user_bias = self.user_bias(inputs[:, 0])
+        place_bias = self.place_bias(inputs[:, 1])
+        
+        dot_user_place = tf.tensordot(user_vector, place_vector, 2)
+        x = dot_user_place + user_bias + place_bias
+        
+        return tf.nn.sigmoid(x)  # Sigmoid activation
+
+        model = RecommenderNet(num_users, num_place, 100)
+    ```
+4. Melatih Model:
+Melatih model menggunakan data pelatihan dan memvalidasinya dengan data validasi.
+    ```python
+    model.compile(loss=tf.keras.losses.BinaryCrossentropy(), optimizer=keras.optimizers.Adam(), metrics=[tf.keras.metrics.RootMeanSquaredError()])
+    
+    history = model.fit(x_train, y_train, batch_size=8, epochs=100, validation_data=(x_val, y_val))
+    ```
+
+5. Plotting Metrics Pelatihan:
+Menampilkan grafik Root Mean Squared Error selama pelatihan dan validasi.
+    ```python
+    plt.plot(history.history['root_mean_squared_error'])
+    plt.plot(history.history['val_root_mean_squared_error'])
+    plt.title('model_metrics')
+    plt.ylabel('root_mean_squared_error')
+    plt.xlabel('epoch')
+    plt.legend(['train', 'test'], loc='upper left')
+    plt.show()
+    ```
+    Hasil <br>
+    ![download]()
 
     ***Kelebihan dan Kekurangan Content-Based Filtering***
     
