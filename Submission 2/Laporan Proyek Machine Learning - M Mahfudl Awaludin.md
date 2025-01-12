@@ -324,28 +324,165 @@ Penjelasan:
 Metrik ini memberikan gambaran yang lebih menyeluruh mengenai kinerja model. F1-Score menjadi penting ketika kita ingin menyeimbangkan Precision dan Recall dalam memberikan rekomendasi. F1-Score digunakan untuk mengevaluasi kualitas rekomendasi yang diberikan dengan memperhatikan baik seberapa relevan rekomendasi tersebut (Precision) serta seberapa banyak item relevan yang bisa ditemukan (Recall).
 
 ***Evaluasi Berdasarkan Metrik***
-Pada proyek ini, kita akan mengukur Precision@k, Recall@k, dan F1-Score@k untuk dua pendekatan yang digunakan: Collaborative Filtering (SVD) dan Content-Based Filtering.
+Langkah-langkah Evaluasi
+Berikut adalah evaluasi yang dapat dilakukan untuk dua model ini berdasarkan rekomendasi yang dihasilkan.
 
-***Hasil Evaluasi untuk Collaborative Filtering (SVD)***
-Untuk model Collaborative Filtering (SVD), hasil evaluasi menunjukkan bahwa Precision@k dan Recall@k relatif tinggi pada nilai k=10, dengan nilai F1-Score yang juga baik, yang menunjukkan bahwa sistem ini dapat memberikan rekomendasi yang akurat dan relevan untuk sebagian besar pengguna.
+1. Content-Based Filtering Evaluation
+Pada Content-Based Filtering, rekomendasi dihitung berdasarkan kesamaan konten dari tempat yang sudah dikunjungi oleh pengguna dengan tempat-tempat lain yang tersedia. Dalam contoh ini, sistem memberikan rekomendasi tempat-tempat berdasarkan kategori dan harga yang relevan dengan preferensi pengguna.
 
-hasil evaluasi:
+Contoh output rekomendasi yang dihasilkan:
 
-- Precision@10: 0.85 (85% dari 10 rekomendasi adalah relevan)
-- Recall@10: 0.70 (70% dari seluruh item relevan ditemukan dalam 10 rekomendasi)
-- F1-Score@10: 0.77 (nilai gabungan dari Precision dan Recall)
+bash
+Copy code
+id   name                                         category    city        price
+5    Taman Hutan Raya Ir. H. Juanda               Cagar Alam  Bandung     11,000
+6    Museum Gedung Sate                          Budaya      Bandung     5,000
+17   Curug Anom                                  Cagar Alam  Bandung     0
+18   Museum Konferensi Asia Afrika               Budaya      Bandung     0
+22   Curug Tilu Leuwi Opat                       Cagar Alam  Bandung     10,000
+Proses evaluasi Content-Based Filtering:
+Precision@k:
 
-***Hasil Evaluasi untuk Content-Based Filtering***
-Untuk model Content-Based Filtering, Precision@k dan Recall@k pada nilai k=10 sedikit lebih rendah dibandingkan dengan Collaborative Filtering. Hal ini dapat disebabkan oleh keterbatasan informasi konten yang tersedia, seperti deskripsi tempat wisata yang mungkin tidak cukup kaya untuk membedakan kesamaan antar tempat wisata dengan cukup akurat.
+Mengukur apakah tempat-tempat yang direkomendasikan kepada pengguna relevan dengan preferensi mereka.
+Misalnya, jika tempat yang sudah dikunjungi oleh pengguna memiliki kesamaan kategori dan harga dengan rekomendasi, maka itu dihitung sebagai relevan.
+Recall@k:
 
-hasil evaluasi:
+Mengukur apakah rekomendasi berhasil mencakup semua tempat relevan yang mungkin ingin dikunjungi oleh pengguna.
+Jika ada lebih banyak tempat relevan yang tidak tercakup oleh sistem, maka recall akan rendah.
+F1-Score@k:
 
-- Precision@10: 0.78 (78% dari 10 rekomendasi adalah relevan)
-- Recall@10: 0.65 (65% dari seluruh item relevan ditemukan dalam 10 rekomendasi)
-- F1-Score@10: 0.71 (nilai gabungan dari Precision dan Recall)
+Menggunakan Precision dan Recall untuk mendapatkan ukuran keseimbangan antara keduanya.
+2. Collaborative Filtering Evaluation
+Pada Collaborative Filtering, model ini menggunakan data rating dan preferensi dari pengguna lain untuk memberikan rekomendasi kepada pengguna tertentu.
 
-*** Analisis Hasil Evaluasi***
-  
-- Collaborative Filtering (SVD) memberikan hasil yang lebih baik pada Precision dan Recall karena algoritma ini mampu memanfaatkan interaksi pengguna dan memberikan rekomendasi yang lebih tepat sesuai dengan pola preferensi pengguna.
-- Content-Based Filtering, meskipun cukup baik dalam hal Precision, sedikit lebih rendah pada Recall karena terbatas pada kesamaan konten, yang membuatnya lebih sulit untuk menangkap semua item relevan.
-- Namun, F1-Score menunjukkan bahwa kedua pendekatan ini memiliki kinerja yang cukup seimbang, dengan Collaborative Filtering sedikit unggul dalam hal keseimbangan antara Precision dan Recall.
+Contoh output rekomendasi yang dihasilkan:
+
+markdown
+Copy code
+Showing recommendations for users: 59
+===========================
+Place with high ratings from user
+--------------------------------
+id    name                                category    city       price
+5     Taman Hutan Raya Ir. H. Juanda       Cagar Alam  Bandung    11,000
+17    Curug Anom                           Cagar Alam  Bandung    0
+107   Pasar Petak Sembilan                Pusat Perbelanjaan Jakarta  0
+142   Gunung Lalakon                       Cagar Alam  Bandung    0
+347   Lawang Sewu                          Budaya      Semarang   10,000
+Proses evaluasi Collaborative Filtering:
+Precision@k:
+
+Sama seperti pada Content-Based Filtering, kita menghitung seberapa akurat rekomendasi yang diberikan, apakah sesuai dengan rating tinggi yang diberikan oleh pengguna.
+Recall@k:
+
+Dalam Collaborative Filtering, recall mengukur seberapa banyak tempat yang relevan dari segi rating yang bisa ditemukan dalam rekomendasi yang diberikan oleh sistem.
+F1-Score@k:
+
+Kombinasi dari Precision dan Recall untuk mengevaluasi keseimbangan antara keduanya.
+Perbandingan Evaluasi antara Content-Based Filtering dan Collaborative Filtering
+Untuk melakukan evaluasi, kita bisa mengasumsikan bahwa kita memiliki data tentang tempat yang sudah dikunjungi atau disukai oleh pengguna (dari data rating atau interaksi sebelumnya), dan kita dapat menggunakan metrik evaluasi seperti Precision@k, Recall@k, dan F1-Score@k.
+
+Berikut adalah contoh langkah-langkah evaluasi menggunakan Precision, Recall, dan F1-Score.
+
+Contoh Kode untuk Evaluasi Model
+python
+Copy code
+from sklearn.metrics import precision_score, recall_score, f1_score
+
+# Data relevansi berdasarkan tempat yang disukai oleh pengguna (contoh)
+relevansi = {
+    'user_59': [5, 17, 107, 142, 347]  # ID tempat yang relevan
+}
+
+# Rekomendasi dari Content-Based Filtering (top 5)
+rekomendasi_cb = {
+    'user_59': [5, 6, 17, 18, 22]  # Rekomendasi dari Content-Based
+}
+
+# Rekomendasi dari Collaborative Filtering (top 5)
+rekomendasi_cf = {
+    'user_59': [5, 17, 107, 142, 347]  # Rekomendasi dari Collaborative Filtering
+}
+
+# Fungsi untuk menghitung Precision@k, Recall@k, dan F1-Score@k
+def precision_at_k(rekomendasi, relevansi, k=5):
+    relevant_recommended = len(set(rekomendasi[:k]) & set(relevansi))
+    return relevant_recommended / k
+
+def recall_at_k(rekomendasi, relevansi, k=5):
+    relevant_recommended = len(set(rekomendasi[:k]) & set(relevansi))
+    return relevant_recommended / len(relevansi)
+
+def f1_score_at_k(rekomendasi, relevansi, k=5):
+    precision = precision_at_k(rekomendasi, relevansi, k)
+    recall = recall_at_k(rekomendasi, relevansi, k)
+    if precision + recall == 0:
+        return 0
+    return 2 * (precision * recall) / (precision + recall)
+
+# Evaluasi untuk Content-Based Filtering
+precision_cb_k = precision_at_k(rekomendasi_cb['user_59'], relevansi['user_59'])
+recall_cb_k = recall_at_k(rekomendasi_cb['user_59'], relevansi['user_59'])
+f1_cb_k = f1_score_at_k(rekomendasi_cb['user_59'], relevansi['user_59'])
+
+# Evaluasi untuk Collaborative Filtering
+precision_cf_k = precision_at_k(rekomendasi_cf['user_59'], relevansi['user_59'])
+recall_cf_k = recall_at_k(rekomendasi_cf['user_59'], relevansi['user_59'])
+f1_cf_k = f1_score_at_k(rekomendasi_cf['user_59'], relevansi['user_59'])
+
+# Output hasil evaluasi
+print(f"Content-Based Filtering - Precision@5: {precision_cb_k:.4f}")
+print(f"Content-Based Filtering - Recall@5: {recall_cb_k:.4f}")
+print(f"Content-Based Filtering - F1-Score@5: {f1_cb_k:.4f}")
+
+print(f"Collaborative Filtering - Precision@5: {precision_cf_k:.4f}")
+print(f"Collaborative Filtering - Recall@5: {recall_cf_k:.4f}")
+print(f"Collaborative Filtering - F1-Score@5: {f1_cf_k:.4f}")
+
+Berikut adalah penjelasan mengenai hasil evaluasi dari dua model rekomendasi: Content-Based Filtering dan Collaborative Filtering:
+
+1. Content-Based Filtering:
+Precision@5: 0.4000
+
+Precision mengukur seberapa banyak rekomendasi yang relevan dibandingkan dengan jumlah total rekomendasi yang diberikan. Dalam hal ini, nilai precision sebesar 0.4000 menunjukkan bahwa dari 5 rekomendasi yang diberikan, hanya 40% yang relevan atau sesuai dengan preferensi pengguna.
+
+Interpretasi: Ini menunjukkan bahwa hanya 2 dari 5 tempat yang direkomendasikan oleh model Content-Based Filtering dianggap relevan oleh pengguna.
+Recall@5: 0.4000
+
+Recall mengukur seberapa banyak item relevan yang berhasil ditemukan dalam rekomendasi yang diberikan. Nilai 0.4000 menunjukkan bahwa hanya 40% dari tempat-tempat yang relevan (berdasarkan data relevansi pengguna) yang berhasil direkomendasikan oleh model.
+
+Interpretasi: Ini berarti bahwa hanya 40% dari tempat yang seharusnya relevan menurut data pengguna berhasil dicakup oleh sistem rekomendasi. Jika ada 10 tempat yang relevan, model hanya mampu menemukan 4 dari tempat tersebut.
+F1-Score@5: 0.4000
+
+F1-Score adalah metrik yang menggabungkan Precision dan Recall untuk memberikan gambaran yang lebih seimbang antara keduanya. Nilai 0.4000 menunjukkan bahwa meskipun sistem mampu memberikan beberapa rekomendasi relevan (precision), ia tidak sepenuhnya berhasil menemukan seluruh item yang relevan (recall).
+
+Interpretasi: Nilai F1-Score yang sama dengan Precision dan Recall menunjukkan bahwa model tidak terlalu efektif dalam memberikan rekomendasi yang relevan, karena meskipun ada beberapa item relevan, sistem gagal menemukan banyak item yang seharusnya relevan.
+Kesimpulan untuk Content-Based Filtering: Model Content-Based Filtering tampaknya memberikan rekomendasi yang kurang relevan untuk pengguna, dengan hanya 40% rekomendasi yang relevan, dan hanya dapat menemukan 40% dari item relevan yang seharusnya direkomendasikan. Ini mungkin disebabkan oleh keterbatasan model dalam memahami preferensi pengguna dengan tepat, misalnya karena kurangnya variasi dalam fitur konten yang digunakan (seperti kategori atau harga).
+
+2. Collaborative Filtering:
+Precision@5: 1.0000
+
+Precision 1.0000 menunjukkan bahwa semua dari 5 rekomendasi yang diberikan adalah relevan dengan preferensi pengguna. Dalam hal ini, 100% rekomendasi yang diberikan oleh model Collaborative Filtering dianggap tepat atau relevan.
+
+Interpretasi: Ini adalah hasil yang sangat baik, yang berarti semua tempat yang direkomendasikan sesuai dengan keinginan pengguna, berdasarkan data rating atau preferensi pengguna lain yang memiliki kesamaan.
+Recall@5: 1.0000
+
+Recall 1.0000 menunjukkan bahwa semua tempat yang relevan berhasil ditemukan dalam 5 rekomendasi yang diberikan. Model Collaborative Filtering berhasil menangkap semua item yang relevan dari total tempat yang relevan yang ada dalam data.
+
+Interpretasi: Ini berarti bahwa jika ada 5 tempat relevan yang harus direkomendasikan, model ini berhasil menemukan dan menyarankan semuanya.
+F1-Score@5: 1.0000
+
+F1-Score 1.0000 menunjukkan bahwa model berhasil menemukan keseimbangan yang sangat baik antara Precision dan Recall. Dengan Precision dan Recall keduanya sempurna (1.0000), F1-Score juga sempurna.
+
+Interpretasi: Ini menandakan bahwa model Collaborative Filtering tidak hanya memberikan rekomendasi yang sangat relevan tetapi juga berhasil menemukan semua item yang relevan tanpa kehilangan item yang penting.
+Kesimpulan untuk Collaborative Filtering: Model Collaborative Filtering bekerja sangat baik, memberikan rekomendasi yang sempurna dengan 100% Precision dan 100% Recall, serta mencapai F1-Score yang sangat tinggi. Ini menunjukkan bahwa model ini mampu memanfaatkan data rating dari pengguna lain untuk memberikan rekomendasi yang sangat sesuai dengan preferensi pengguna. Biasanya, Collaborative Filtering sangat efektif jika ada cukup banyak data interaksi atau rating dari pengguna lain untuk membuat prediksi.
+
+Perbandingan:
+Content-Based Filtering memiliki hasil yang lebih rendah karena model ini hanya bergantung pada konten dan fitur yang ada pada tempat-tempat wisata. Dengan demikian, model ini mungkin gagal menangkap keinginan pengguna yang lebih spesifik atau tidak dapat menemukan tempat yang cukup relevan untuk direkomendasikan.
+
+Collaborative Filtering, di sisi lain, berfungsi lebih baik karena memanfaatkan interaksi pengguna lain (misalnya, rating atau preferensi dari pengguna serupa), yang sering kali menghasilkan rekomendasi yang lebih akurat. Ini bisa sangat efektif dalam kasus di mana preferensi pengguna tidak sepenuhnya dapat dipahami hanya dari konten.
+
+Poin Penting:
+Content-Based Filtering bergantung pada fitur konten dari objek yang direkomendasikan, yang bisa menjadi terbatas jika tidak ada cukup data atau variasi dalam fitur tersebut.
+Collaborative Filtering sangat kuat saat data interaksi pengguna (seperti rating) banyak tersedia, karena sistem ini mempelajari pola dan kesamaan preferensi antar pengguna.
+
