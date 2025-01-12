@@ -28,6 +28,9 @@ Pentingnya Proyek: Industri pariwisata, khususnya di Indonesia, terus berkembang
 ***Deskripsi Dataset***
 Dataset yang digunakan dalam proyek ini berisi informasi tentang tempat wisata di lima kota besar di Indonesia: Jakarta, Yogyakarta, Semarang, Bandung, dan Surabaya. Dataset ini dibuat untuk Capstone Project Bangkit Academy 2021 dan digunakan dalam pengembangan aplikasi GetLoc. Aplikasi ini berfungsi untuk memberikan rekomendasi tempat wisata berdasarkan preferensi pengguna, seperti kota, harga, kategori, dan waktu. Selain itu, GetLoc juga memberikan rekomendasi mengenai rute tercepat dan termurah untuk mengunjungi tempat-tempat tersebut.
 
+### Sumber Dataset:
+Tautan ke Kaggle: [Indonesia Tourism Destination](https://www.kaggle.com/datasets/aprabowo/indonesia-tourism-destination/data)
+
 ***Dataset ini terdiri dari empat file utama:***
 1. tourism_with_id.csv: Menyimpan informasi detail tentang tempat wisata di lima kota besar, dengan total sekitar 400 lokasi.
 2. user.csv: Menyimpan data pengguna dummy yang digunakan untuk menghasilkan rekomendasi berdasarkan data pengguna.
@@ -81,6 +84,9 @@ Kita dapat memvisualisasikan bagaimana distribusi rating pada berbagai tempat wi
     plt.xlabel('Nama Lokasi')
     plt.show()
     ```
+    Hasil <br>
+    ![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/3d32b69212a4f70d442c37124d000b3ca5eeb746/Submission%202/assets/1.png)
+    
 2. Menangani Nilai yang Hilang (Missing Values):
 Memeriksa apakah ada nilai yang hilang dalam dataset, dan bagaimana cara menanganinya. Ini adalah langkah penting agar model yang dibangun tidak terpengaruh oleh data yang tidak lengkap.
 
