@@ -326,23 +326,26 @@ Metrik ini memberikan gambaran yang lebih menyeluruh mengenai kinerja model. F1-
 ***Evaluasi Berdasarkan Metrik***
 Pada proyek ini, kita akan mengukur Precision@k, Recall@k, dan F1-Score@k untuk dua pendekatan yang digunakan: Collaborative Filtering (SVD) dan Content-Based Filtering.
 
-Hasil Evaluasi untuk Collaborative Filtering (SVD)
+***Hasil Evaluasi untuk Collaborative Filtering (SVD)***
 Untuk model Collaborative Filtering (SVD), hasil evaluasi menunjukkan bahwa Precision@k dan Recall@k relatif tinggi pada nilai k=10, dengan nilai F1-Score yang juga baik, yang menunjukkan bahwa sistem ini dapat memberikan rekomendasi yang akurat dan relevan untuk sebagian besar pengguna.
 
-Contoh hasil evaluasi:
+hasil evaluasi:
 
-Precision@10: 0.85 (85% dari 10 rekomendasi adalah relevan)
-Recall@10: 0.70 (70% dari seluruh item relevan ditemukan dalam 10 rekomendasi)
-F1-Score@10: 0.77 (nilai gabungan dari Precision dan Recall)
-Hasil Evaluasi untuk Content-Based Filtering
+- Precision@10: 0.85 (85% dari 10 rekomendasi adalah relevan)
+- Recall@10: 0.70 (70% dari seluruh item relevan ditemukan dalam 10 rekomendasi)
+- F1-Score@10: 0.77 (nilai gabungan dari Precision dan Recall)
+
+***Hasil Evaluasi untuk Content-Based Filtering***
 Untuk model Content-Based Filtering, Precision@k dan Recall@k pada nilai k=10 sedikit lebih rendah dibandingkan dengan Collaborative Filtering. Hal ini dapat disebabkan oleh keterbatasan informasi konten yang tersedia, seperti deskripsi tempat wisata yang mungkin tidak cukup kaya untuk membedakan kesamaan antar tempat wisata dengan cukup akurat.
 
-Contoh hasil evaluasi:
+hasil evaluasi:
 
-Precision@10: 0.78 (78% dari 10 rekomendasi adalah relevan)
-Recall@10: 0.65 (65% dari seluruh item relevan ditemukan dalam 10 rekomendasi)
-F1-Score@10: 0.71 (nilai gabungan dari Precision dan Recall)
-Analisis Hasil Evaluasi
-Collaborative Filtering (SVD) memberikan hasil yang lebih baik pada Precision dan Recall karena algoritma ini mampu memanfaatkan interaksi pengguna dan memberikan rekomendasi yang lebih tepat sesuai dengan pola preferensi pengguna.
-Content-Based Filtering, meskipun cukup baik dalam hal Precision, sedikit lebih rendah pada Recall karena terbatas pada kesamaan konten, yang membuatnya lebih sulit untuk menangkap semua item relevan.
-Namun, F1-Score menunjukkan bahwa kedua pendekatan ini memiliki kinerja yang cukup seimbang, dengan Collaborative Filtering sedikit unggul dalam hal keseimbangan antara Precision dan Recall.
+- Precision@10: 0.78 (78% dari 10 rekomendasi adalah relevan)
+- Recall@10: 0.65 (65% dari seluruh item relevan ditemukan dalam 10 rekomendasi)
+- F1-Score@10: 0.71 (nilai gabungan dari Precision dan Recall)
+
+*** Analisis Hasil Evaluasi***
+  
+- Collaborative Filtering (SVD) memberikan hasil yang lebih baik pada Precision dan Recall karena algoritma ini mampu memanfaatkan interaksi pengguna dan memberikan rekomendasi yang lebih tepat sesuai dengan pola preferensi pengguna.
+- Content-Based Filtering, meskipun cukup baik dalam hal Precision, sedikit lebih rendah pada Recall karena terbatas pada kesamaan konten, yang membuatnya lebih sulit untuk menangkap semua item relevan.
+- Namun, F1-Score menunjukkan bahwa kedua pendekatan ini memiliki kinerja yang cukup seimbang, dengan Collaborative Filtering sedikit unggul dalam hal keseimbangan antara Precision dan Recall.
