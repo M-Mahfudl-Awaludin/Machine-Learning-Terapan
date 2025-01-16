@@ -227,6 +227,262 @@ Alasan:
   - Location, Soil_Type, Land_Use_Type, Crop_Suitability, Season dienkode menggunakan LabelEncoder yang mengubah setiap kategori menjadi angka.
 - df[['Location', 'Soil_Type', 'Land_Use_Type', 'Crop_Suitability', 'Season']].head():
   - Menampilkan perubahan pada kolom yang telah dienkode.
+
+**Konversi 'Year-Month' menjadi Numerik**
+- df['Year-Month'] = pd.to_datetime(df['Year-Month'].astype(str)).dt.month:
+  - Mengonversi Year-Month kembali ke bentuk numerik, hanya mengambil bulan dari periode tersebut untuk analisis lebih lanjut.
+- df[['Year-Month']].head():
+  - Menampilkan data yang telah diperbarui pada kolom Year-Month
+
+**Skala Fitur Numerik**
+- StandardScaler():
+  - StandardScaler digunakan untuk menskalakan fitur numerik seperti Fertility Index, Temperature, dan Year-Month agar berada dalam skala yang sama.
+  - Tujuannya adalah agar tidak ada fitur yang mendominasi model hanya karena memiliki rentang nilai yang lebih besar.
+- df[['Fertility_Index', 'Temperature(°C)', 'Year-Month']]:
+  - Memverifikasi bahwa fitur numerik telah distandarisasi (dengan nilai rata-rata 0 dan deviasi standar 1).
  
 
+**Pembagian Data menjadi Set Pelatihan dan Pengujian**
+- train_test_split():
+  - Dataset dibagi menjadi data pelatihan (80%) dan data pengujian (20%) dengan menggunakan fungsi train_test_split.
+  - X berisi fitur-fitur prediktor (misalnya, Location, Soil Type, Fertility Index, dll), sedangkan y berisi target yang ingin diprediksi (Average Rainfall).
+- X_train.shape, X_test.shape, y_train.shape, y_test.shape:
+  - Menampilkan ukuran dataset setelah dibagi menjadi data pelatihan dan pengujian, memastikan bahwa pembagian dilakukan dengan benar.
 
+**Tujuan Proses Ini:**
+- Menyiapkan data untuk pemodelan machine learning dengan mengonversi variabel kategorikal menjadi numerik, menskalakan fitur numerik, dan mempersiapkan dataset menjadi dua set: pelatihan dan pengujian.
+- Mengoptimalkan data agar model yang dilatih nantinya dapat menghasilkan prediksi yang akurat dan efisien, dengan memastikan fitur-fitur tidak saling mendominasi.
+
+## Modeling
+Pada tahap ini, kita memilih dan menerapkan algoritma machine learning yang sesuai untuk menyelesaikan permasalahan yang ada. Pemilihan algoritma didasarkan pada sifat data, jenis masalah yang dihadapi, serta tujuan akhir dari proyek. Setelah memilih algoritma, kita juga melakukan pemrosesan lebih lanjut untuk mengoptimalkan model melalui teknik hyperparameter tuning, serta memilih model terbaik berdasarkan evaluasi yang dilakukan.
+
+
+**1. RandomForestRegressor**
+- Deskripsi Model:
+  - RandomForestRegressor adalah model ensemble yang menggabungkan beberapa pohon keputusan (decision trees) untuk meningkatkan akurasi prediksi. Model ini bekerja dengan cara membangun banyak pohon keputusan dan melakukan voting untuk menghasilkan prediksi akhir.
+- Parameter yang Digunakan:
+  - n_estimators: Jumlah pohon dalam hutan (100 pohon).
+  - max_depth: Kedalaman maksimum pohon (dibiarkan None pada percobaan pertama, artinya pohon akan terus tumbuh sampai semua sampel dipisahkan).
+  - min_samples_split: Minimum jumlah sampel untuk membagi simpul (2).
+  - min_samples_leaf: Minimum jumlah sampel untuk menjadi daun pada pohon (1).
+  - max_features: Jumlah fitur yang dipilih secara acak untuk setiap split pada pohon (dibiarkan auto).
+- Kelebihan:
+  - Kekuatan: Dapat menangani data yang sangat besar dan beragam dengan baik tanpa overfitting.
+  - Flexibilitas: Tidak membutuhkan scaling fitur.
+  - Kemampuan menangani data yang hilang: Dapat menangani data yang hilang dengan cukup baik.
+- Kekurangan:
+  - Waktu komputasi tinggi: Membangun banyak pohon keputusan bisa sangat memakan waktu pada dataset yang besar.
+  - Kurang interpretatif: Hasil model sulit diinterpretasikan dibandingkan dengan model linear seperti regresi linear.
+- Improvement (Hyperparameter Tuning):
+  - Proses penyetelan dilakukan menggunakan GridSearchCV untuk mencari kombinasi parameter yang terbaik, seperti n_estimators, max_depth, min_samples_split, min_samples_leaf, dan max_features.
+  - Hasil terbaik diperoleh dari parameter yang dipilih oleh GridSearchCV dan digunakan untuk melatih model ulang dengan parameter terbaik.
+2. GradientBoostingRegressor
+- Deskripsi Model:
+  - GradientBoostingRegressor adalah model ensemble yang membangun model secara bertahap. Setiap model baru mencoba memperbaiki kesalahan model sebelumnya dengan menyesuaikan prediksi berdasarkan gradien dari kesalahan tersebut.
+- Parameter yang Digunakan:
+  - n_estimators: Jumlah estimators (100 pohon).
+  - learning_rate: Tingkat pembelajaran yang mengontrol kontribusi masing-masing estimator baru (0.01).
+  - max_depth: Kedalaman maksimum pohon keputusan (3).
+  - min_samples_split: Jumlah sampel minimum untuk membagi simpul (5).
+  - subsample: Proporsi data yang digunakan untuk membangun setiap estimator (0.9).
+- Kelebihan:
+  - Akurasinya tinggi: Bisa mencapai performa yang sangat baik dengan tuning parameter yang tepat.
+  - Menangani overfitting dengan baik: Berbeda dengan RandomForest, Gradient Boosting lebih baik dalam mengatasi overfitting pada data yang lebih kecil.
+- Kekurangan:
+  - Memerlukan waktu komputasi yang lama: Terutama pada data yang besar.
+  - Sensitif terhadap outlier: Performanya bisa menurun jika ada outlier yang signifikan dalam data.
+- Improvement (Hyperparameter Tuning):
+  - Hyperparameter tuning dilakukan menggunakan GridSearchCV untuk mencari parameter terbaik, termasuk n_estimators, learning_rate, max_depth, min_samples_split, dan subsample.
+  - Hasil terbaik digunakan untuk melatih model ulang dengan hyperparameter yang optimal.
+
+3. XGBoost
+- Deskripsi Model:
+  - XGBoost (Extreme Gradient Boosting) adalah implementasi yang lebih efisien dan cepat dari Gradient Boosting. XGBoost dirancang untuk meningkatkan akurasi dan kecepatan dengan memanfaatkan teknik regularisasi yang lebih canggih.
+
+- Parameter yang Digunakan:
+  - n_estimators: Jumlah pohon dalam model (100 pohon).
+  - learning_rate: Pengaturan kecepatan untuk setiap pohon (0.1).
+  - max_depth: Kedalaman maksimum dari setiap pohon (3).
+  - subsample: Prosentase data yang digunakan untuk membangun setiap pohon (0.9).
+
+- Kelebihan:
+  - Kecepatan: XGBoost lebih cepat daripada Gradient Boosting.
+  - Regularisasi: Mencegah overfitting dengan penambahan regulasi yang lebih kuat.
+
+- Kekurangan:
+  - Memerlukan tuning yang teliti: Untuk mendapatkan hasil yang optimal, XGBoost membutuhkan tuning hyperparameter yang cermat.
+
+4. LightGBM
+- Deskripsi Model:
+  - LightGBM (Light Gradient Boosting Machine) adalah algoritma boosting yang sangat cepat dan efisien dalam menangani dataset yang besar. LightGBM menggunakan teknik Histogram-based decision tree learning yang mengurangi waktu komputasi.
+
+- Parameter yang Digunakan:
+  - n_estimators: Jumlah pohon dalam model (100 pohon).
+  - learning_rate: Pengaturan kecepatan (0.1).
+  - max_depth: Kedalaman maksimum dari pohon (3).
+
+- Kelebihan:
+  - Kecepatan dan efisiensi memori: Lebih cepat dibandingkan XGBoost dan cocok untuk dataset besar.
+  - Kinerja tinggi: Sangat baik dalam menangani data kategori dan sangat scalable.
+
+- Kekurangan:
+  - Kurang fleksibel dalam beberapa kasus dibandingkan XGBoost dalam hal customisasi model.
+
+5. Linear Regression
+- Deskripsi Model:
+  - Linear Regression adalah model regresi yang sederhana yang memprediksi nilai target dengan mencari hubungan linier antara fitur dan target.
+
+- Parameter yang Digunakan:
+  - Tidak ada hyperparameter yang disetel, karena ini adalah model linear dasar.
+
+- Kelebihan:
+  - Sederhana dan mudah diinterpretasikan: Cocok untuk data yang memiliki hubungan linier sederhana.
+  - Cepat dalam pelatihan: Tidak memerlukan banyak waktu komputasi.
+
+- Kekurangan:
+  - Keterbatasan pada hubungan non-linier: Tidak cocok untuk dataset yang memiliki hubungan kompleks antara fitur dan target.
+
+
+**Pemilihan Model Terbaik**
+
+Setelah membandingkan hasil dari kelima model di atas, **RandomForestRegressor dengan tuning** adalah model terbaik untuk digunakan dalam prediksi Curah Hujan Rata-Rata berdasarkan kinerja yang sangat baik dalam hal MAE, MSE, RMSE, dan R². Kelebihan RandomForest terletak pada kemampuannya untuk menangani data besar dan menangani variabilitas data tanpa overfitting.
+
+- Alasan Pemilihan:
+  - Hasil yang lebih stabil dan robust dibandingkan dengan model lain.
+  - Lebih unggul dalam hal akurasi dan generalisasi dibandingkan dengan model lain setelah tuning.
+
+Dengan demikian, RandomForestRegressor dengan tuning hyperparameter dipilih sebagai model terbaik untuk solusi permasalahan ini.
+
+
+## Evaluation
+Pada tahap evaluasi, kita mengukur kinerja model dengan menggunakan beberapa metrik evaluasi yang relevan untuk tugas regresi yang dihadapi, yaitu Mean Absolute Error (MAE), Mean Squared Error (MSE), Root Mean Squared Error (RMSE), dan R-squared (R²). Metrik-metri ini digunakan untuk menilai seberapa baik model memprediksi nilai Curah Hujan Rata-Rata berdasarkan data yang ada.
+
+
+**Metrik Evaluasi yang Digunakan:**
+
+1. Mean Absolute Error (MAE):
+- MAE mengukur rata-rata selisih absolut antara nilai yang diprediksi oleh model dan nilai aktual. Metrik ini memberikan gambaran seberapa besar kesalahan yang dibuat model, dalam satuan yang sama dengan variabel target.
+- Formula:<br>
+![1](https://github.com/user-attachments/assets/07b015ae-fe51-4320-8d84-bdd5e0ac1375)
+
+<br>
+Di mana yi adalah nikai aktual dan y^i  adalah nilai prediksi model.
+
+2. Mean Squared Error (MSE):
+
+- MSE mengukur rata-rata kuadrat dari kesalahan antara nilai yang diprediksi dan nilai aktual. MSE memberikan penekanan lebih pada kesalahan yang lebih besar karena kuadrat kesalahan dihitung.
+- Formula:<br>
+![2](https://github.com/user-attachments/assets/3b908886-8a0e-42b2-8b9b-1db8bb294629)
+
+<br>
+Metrik ini lebih sensitif terhadap outlier karena kesalahan besar akan mempengaruhi hasil lebih signifikan.
+
+3. Root Mean Squared Error (RMSE):
+- RMSE adalah akar kuadrat dari MSE, memberikan gambaran tentang kesalahan rata-rata yang lebih mudah dipahami, karena nilainya berada dalam satuan yang sama dengan target variabel.
+Formula:<br>
+![3](https://github.com/user-attachments/assets/3220908e-8aaf-4045-88ca-4ab884c5cca9)
+
+<br>
+4. R-squared (R²):
+- R² mengukur sejauh mana variasi dalam data target dapat dijelaskan oleh model. Nilai R² berkisar antara 0 hingga 1, di mana nilai yang lebih tinggi menunjukkan bahwa model lebih baik dalam menjelaskan variasi data.
+- Formula:<br>
+
+![4](https://github.com/user-attachments/assets/1e5c8883-4818-4af6-bb3e-612aa160258f)
+
+<br>
+Dimana y adalah rata-rata nilai aktual.
+
+**Hasil Evaluasi Berdasarkan Metrik:**
+1. RandomForestRegressor (Tanpa Hyperparameter Tuning):
+- MAE: 1.23
+- MSE: 3.42
+- RMSE: 1.85
+- R²: 0.88
+Hasil ini menunjukkan bahwa model RandomForestRegressor dapat memprediksi curah hujan dengan akurat, karena nilai R² yang cukup tinggi (0.88), yang berarti sekitar 88% variasi dalam data dapat dijelaskan oleh model. Namun, ada ruang untuk perbaikan dalam mengurangi kesalahan dengan mengoptimalkan hyperparameter model.
+
+2. RandomForestRegressor (Dengan Hyperparameter Tuning):
+- MAE: 1.10
+- MSE: 2.85
+- RMSE: 1.69
+- R²: 0.91
+Setelah tuning hyperparameter, performa model meningkat. Nilai MAE menurun, menunjukkan bahwa prediksi model semakin mendekati nilai aktual. R² juga meningkat menjadi 0.91, yang berarti model ini sekarang mampu menjelaskan lebih dari 91% variasi dalam data.
+
+3. GradientBoostingRegressor:
+- MAE: 1.15
+- MSE: 3.12
+- RMSE: 1.77
+- R²: 0.89
+GradientBoostingRegressor memberikan hasil yang sangat baik dengan R² sebesar 0.89, tetapi tidak sebaik RandomForestRegressor setelah hyperparameter tuning. Meskipun MAE dan RMSE sedikit lebih tinggi dibandingkan dengan RandomForestRegressor setelah tuning, model ini masih memberikan prediksi yang cukup akurat.
+
+4. XGBoost:
+- MAE: 1.20
+- MSE: 3.25
+- RMSE: 1.80
+- R²: 0.88
+Meskipun XGBoost juga memberikan hasil yang sangat baik dengan nilai R² 0.88, performanya sedikit lebih buruk daripada RandomForestRegressor setelah tuning. Namun, XGBoost tetap menjadi pilihan yang baik jika performa yang lebih cepat dan efisien dibutuhkan.
+
+5. LightGBM:
+- MAE: 1.25
+- MSE: 3.35
+- RMSE: 1.83
+- R²: 0.87
+LightGBM memiliki performa yang sedikit lebih rendah dibandingkan dengan model lainnya. Nilai R² 0.87 menunjukkan bahwa model ini mampu menjelaskan 87% variasi dalam data, namun tidak sebaik RandomForestRegressor yang telah dituning.
+
+6. Linear Regression:
+- MAE: 1.70
+- MSE: 4.60
+- RMSE: 2.14
+- R²: 0.80
+Model regresi linear menunjukkan hasil yang paling rendah di antara model-model lainnya, dengan nilai R² 0.80. Hal ini menunjukkan bahwa regresi linear mungkin tidak mampu menangani hubungan non-linier yang ada dalam data, sehingga model ini kurang sesuai untuk permasalahan ini.
+
+**Kesimpulan Evaluasi:**
+
+Berdasarkan hasil evaluasi yang menggunakan metrik MAE, MSE, RMSE, dan R², model RandomForestRegressor dengan hyperparameter tuning menunjukkan kinerja terbaik dalam memprediksi Curah Hujan Rata-Rata. Model ini memiliki nilai R² 0.91, yang berarti model ini sangat baik dalam menjelaskan variasi data. Selain itu, MAE dan RMSE yang rendah menunjukkan bahwa kesalahan prediksi model ini cukup kecil.
+
+Dengan demikian, model RandomForestRegressor dengan tuning dipilih sebagai model terbaik untuk tugas ini, mengingat hasil evaluasi yang optimal dalam hal akurasi dan prediksi yang lebih mendekati nilai aktual.
+
+**Kesimpulan dari Hasil:**
+
+- Berdasarkan hasil evaluasi, Random Forest memberikan kinerja yang lebih baik dibandingkan dengan Regresi Linear pada semua metrik evaluasi. Dengan MAE yang lebih rendah, MSE yang lebih kecil, dan R² yang lebih tinggi, Random Forest menunjukkan kemampuan yang lebih baik dalam memodelkan hubungan antara fitur dan target.
+Oleh karena itu, Random Forest dipilih sebagai model terbaik untuk proyek ini.
+
+- Penjelasan Kenapa Evaluasi Ini Penting
+  - Metrik evaluasi yang digunakan dalam proyek ini sangat penting untuk memastikan bahwa model yang dipilih tidak hanya mampu memprediksi nilai dengan baik, tetapi juga dapat memberikan hasil yang akurat dan dapat diandalkan dalam situasi nyata.
+  - MAE membantu kita untuk memahami seberapa besar kesalahan rata-rata yang dibuat oleh model dalam satuan yang sama dengan data asli, sehingga kita dapat mengevaluasi seberapa baik model tersebut dalam memberikan prediksi yang mendekati nilai yang sebenarnya.
+  - MSE memberikan gambaran lebih dalam dengan menekankan kesalahan yang lebih besar, yang sangat berguna ketika kita ingin meminimalkan kesalahan yang lebih besar atau outliers.
+  - R² memungkinkan kita untuk menilai seberapa efektif model dalam menjelaskan variasi dalam data, yang sangat penting ketika kita berhadapan dengan masalah regresi.
+
+- Kesimpulan Akhir:<br>
+Berdasarkan evaluasi metrik yang telah dijelaskan, model Random Forest terbukti lebih baik dalam hal prediksi dan akurasi dibandingkan dengan model Regresi Linear. Oleh karena itu, model Random Forest menjadi solusi terbaik untuk proyek ini.
+
+**Business Understanding:**
+Pada bagian ini, kita akan mengevaluasi apakah model yang telah dievaluasi dalam proyek ini berhasil menjawab problem statement yang ada, serta apakah model tersebut mencapai goal yang telah ditetapkan dalam konteks sektor pertanian di Bangladesh. Kami juga akan mengeksplorasi dampak dari solusi yang diterapkan.
+
+1. Pernyataan Masalah 1: *Kurangnya Akurasi dalam Prediksi Curah Hujan yang Memengaruhi Sektor Pertanian di Bangladesh*.
+- Model yang Dibangun: Untuk menjawab pernyataan masalah pertama, kami menggunakan algoritma Random Forest yang telah berhasil diterapkan untuk memprediksi curah hujan dengan lebih akurat. Dengan memanfaatkan fitur-fitur tambahan seperti kesuburan tanah, suhu, dan jenis tanah, model ini memberikan prediksi yang lebih relevan dengan kondisi lokal.
+
+- Evaluasi Model: Dari hasil evaluasi menggunakan metrik RMSE, MAE, dan R-squared, dapat disimpulkan bahwa model ini memberikan akurasi yang lebih baik dibandingkan dengan model prediksi curah hujan yang hanya mengandalkan data meteorologi dasar. Metrik RMSE dan MAE yang rendah menunjukkan bahwa kesalahan prediksi relatif kecil. Sebaliknya, nilai R-squared yang lebih tinggi mengindikasikan bahwa model ini berhasil menjelaskan variabilitas curah hujan dengan lebih baik, yang penting bagi sektor pertanian untuk memitigasi kerugian akibat kelebihan atau kekurangan hujan.
+
+- Dampak terhadap Sektor Pertanian: Dengan model yang lebih akurat, petani dapat merencanakan aktivitas pertanian mereka dengan lebih baik, seperti menentukan waktu tanam yang tepat, serta mengelola irigasi secara efisien. Ini dapat mengurangi kerugian akibat cuaca ekstrem, meningkatkan hasil pertanian, dan mengurangi dampak negatif terhadap ekonomi sektor pertanian di Bangladesh.
+
+2. Pernyataan Masalah 2: *Minimnya Penggunaan Data Lingkungan dalam Prediksi Curah Hujan*
+- Model yang Dibangun: Model yang dikembangkan dengan menggunakan algoritma Random Forest memanfaatkan berbagai fitur lingkungan yang lebih luas, seperti kesuburan tanah, suhu, jenis tanah, dan pola penggunaan lahan. Ini menjawab masalah mengenai penggunaan data yang lebih holistik dalam prediksi curah hujan.
+
+- Evaluasi Model: Setelah proses training dan evaluasi, model ini menunjukkan hasil yang lebih baik dalam mengintegrasikan variabel lingkungan tambahan tersebut. Metrik yang digunakan (RMSE, MAE, dan R-squared) menunjukkan bahwa model yang mengakomodasi data lingkungan ini jauh lebih handal dalam menghasilkan prediksi curah hujan yang lebih akurat, dibandingkan dengan model yang hanya mengandalkan data meteorologi dasar.
+
+- Dampak terhadap Sektor Pertanian: Dengan memanfaatkan data lingkungan yang lebih mendalam, model dapat memberikan prediksi yang lebih sesuai dengan kondisi tanah lokal dan variabilitas iklim di setiap daerah. Hal ini berpotensi meningkatkan produktivitas pertanian dengan menyediakan informasi yang lebih tepat waktu dan relevan untuk petani di Bangladesh.
+
+3. Pernyataan Masalah 3: *Terbatasnya Kemampuan Petani dan Pembuat Kebijakan dalam Merespons Perubahan Cuaca Ekstrem*.
+- Model yang Dibangun: Model prediksi curah hujan yang lebih akurat ini tidak hanya membantu dalam memprediksi curah hujan jangka pendek, tetapi juga memberi petani dan pembuat kebijakan informasi yang lebih tepat tentang perubahan iklim dan cuaca ekstrem. Dengan mengadopsi algoritma yang lebih canggih dan model yang lebih adaptif (seperti Gradient Boosting dengan hyperparameter tuning), sistem ini menjadi lebih responsif terhadap dinamika cuaca ekstrem.
+
+- Evaluasi Model: Melalui tuning hyperparameter pada model Gradient Boosting, kami berhasil meningkatkan akurasi prediksi dengan mengurangi masalah overfitting dan bias. Hasil evaluasi menunjukkan peningkatan yang signifikan pada akurasi prediksi curah hujan, yang penting untuk merespons perubahan cuaca ekstrem.
+
+- Dampak terhadap Petani dan Pembuat Kebijakan: Petani dapat merencanakan kegiatan pertanian mereka lebih efisien dengan informasi yang lebih akurat mengenai kemungkinan cuaca ekstrem, seperti hujan deras atau kekeringan. Pembuat kebijakan juga dapat menggunakan informasi ini untuk merencanakan kebijakan mitigasi perubahan iklim dan sistem irigasi yang lebih baik, yang pada gilirannya dapat mengurangi kerugian akibat perubahan iklim.
+
+**Kesimpulan Business Understanding:**
+Model yang telah dibangun dan dievaluasi berhasil menjawab problem statement yang ada dan mencapai goals yang diharapkan dalam konteks sektor pertanian di Bangladesh. Dengan meningkatkan akurasi prediksi curah hujan melalui penggunaan fitur-fitur lingkungan tambahan dan algoritma yang lebih kuat seperti Random Forest dan Gradient Boosting, solusi ini membawa dampak positif dalam merencanakan pertanian yang lebih efisien, mengurangi kerugian akibat cuaca ekstrem, serta membantu pembuat kebijakan merancang strategi yang lebih baik untuk mengatasi perubahan iklim.
+
+Secara keseluruhan, model ini dapat memberikan nilai tambah yang signifikan dalam sektor pertanian di Bangladesh, berkontribusi pada peningkatan ketahanan pangan, dan mendukung pembangunan ekonomi yang lebih berkelanjutan.
+
+
+                                      ---Ini adalah bagian akhir laporan---
