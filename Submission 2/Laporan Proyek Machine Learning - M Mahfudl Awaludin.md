@@ -453,61 +453,47 @@ Berikut adalah evaluasi yang dapat dilakukan untuk dua model ini berdasarkan rek
 1. Content-Based Filtering Evaluation
 Pada Content-Based Filtering, rekomendasi dihitung berdasarkan kesamaan konten dari tempat yang sudah dikunjungi oleh pengguna dengan tempat-tempat lain yang tersedia. Dalam contoh ini, sistem memberikan rekomendasi tempat-tempat berdasarkan kategori dan harga yang relevan dengan preferensi pengguna.
 
-Contoh output rekomendasi yang dihasilkan:
+    Contoh output rekomendasi yang dihasilkan: <br>
+    ![Capture](https://github.com/user-attachments/assets/6767da50-ae54-4168-8aa9-be550c707f48)
+    
+    
+    Proses evaluasi Content-Based Filtering:
+    - Precision@k:
+    Mengukur apakah tempat-tempat yang direkomendasikan kepada pengguna relevan dengan preferensi mereka.
+    Misalnya, jika tempat yang sudah dikunjungi oleh pengguna memiliki kesamaan kategori dan harga dengan rekomendasi, maka itu dihitung sebagai relevan.
+    
+    - Recall@k:
+    Mengukur apakah rekomendasi berhasil mencakup semua tempat relevan yang mungkin ingin dikunjungi oleh pengguna.
+    Jika ada lebih banyak tempat relevan yang tidak tercakup oleh sistem, maka recall akan rendah.
+    
+    - F1-Score@k:
+    Menggunakan Precision dan Recall untuk mendapatkan ukuran keseimbangan antara keduanya.
 
-bash
-Copy code
-id   name                                         category    city        price
-5    Taman Hutan Raya Ir. H. Juanda               Cagar Alam  Bandung     11,000
-6    Museum Gedung Sate                          Budaya      Bandung     5,000
-17   Curug Anom                                  Cagar Alam  Bandung     0
-18   Museum Konferensi Asia Afrika               Budaya      Bandung     0
-22   Curug Tilu Leuwi Opat                       Cagar Alam  Bandung     10,000
-Proses evaluasi Content-Based Filtering:
-Precision@k:
-
-Mengukur apakah tempat-tempat yang direkomendasikan kepada pengguna relevan dengan preferensi mereka.
-Misalnya, jika tempat yang sudah dikunjungi oleh pengguna memiliki kesamaan kategori dan harga dengan rekomendasi, maka itu dihitung sebagai relevan.
-Recall@k:
-
-Mengukur apakah rekomendasi berhasil mencakup semua tempat relevan yang mungkin ingin dikunjungi oleh pengguna.
-Jika ada lebih banyak tempat relevan yang tidak tercakup oleh sistem, maka recall akan rendah.
-F1-Score@k:
-
-Menggunakan Precision dan Recall untuk mendapatkan ukuran keseimbangan antara keduanya.
 2. Collaborative Filtering Evaluation
 Pada Collaborative Filtering, model ini menggunakan data rating dan preferensi dari pengguna lain untuk memberikan rekomendasi kepada pengguna tertentu.
 
-Contoh output rekomendasi yang dihasilkan:
+    Contoh output rekomendasi yang dihasilkan: <br>
+    ![sss](https://github.com/user-attachments/assets/e2332d4c-4f24-4a13-b5f9-3b01ece5a33d)
+    
+    
+    
+    Proses evaluasi Collaborative Filtering:
+    
+    - Precision@k:
+    Sama seperti pada Content-Based Filtering, kita menghitung seberapa akurat rekomendasi yang diberikan, apakah sesuai dengan rating tinggi yang diberikan oleh pengguna.
+    
+    - Recall@k:
+    Dalam Collaborative Filtering, recall mengukur seberapa banyak tempat yang relevan dari segi rating yang bisa ditemukan dalam rekomendasi yang diberikan oleh sistem.
+    
+    - F1-Score@k:
+    Kombinasi dari Precision dan Recall untuk mengevaluasi keseimbangan antara keduanya.
 
-markdown
-Copy code
-Showing recommendations for users: 59
-===========================
-Place with high ratings from user
---------------------------------
-id    name                                category    city       price
-5     Taman Hutan Raya Ir. H. Juanda       Cagar Alam  Bandung    11,000
-17    Curug Anom                           Cagar Alam  Bandung    0
-107   Pasar Petak Sembilan                Pusat Perbelanjaan Jakarta  0
-142   Gunung Lalakon                       Cagar Alam  Bandung    0
-347   Lawang Sewu                          Budaya      Semarang   10,000
-Proses evaluasi Collaborative Filtering:
-Precision@k:
-
-Sama seperti pada Content-Based Filtering, kita menghitung seberapa akurat rekomendasi yang diberikan, apakah sesuai dengan rating tinggi yang diberikan oleh pengguna.
-Recall@k:
-
-Dalam Collaborative Filtering, recall mengukur seberapa banyak tempat yang relevan dari segi rating yang bisa ditemukan dalam rekomendasi yang diberikan oleh sistem.
-F1-Score@k:
-
-Kombinasi dari Precision dan Recall untuk mengevaluasi keseimbangan antara keduanya.
-Perbandingan Evaluasi antara Content-Based Filtering dan Collaborative Filtering
+**Perbandingan Evaluasi antara Content-Based Filtering dan Collaborative Filtering**
 Untuk melakukan evaluasi, kita bisa mengasumsikan bahwa kita memiliki data tentang tempat yang sudah dikunjungi atau disukai oleh pengguna (dari data rating atau interaksi sebelumnya), dan kita dapat menggunakan metrik evaluasi seperti Precision@k, Recall@k, dan F1-Score@k.
 
-Berikut adalah contoh langkah-langkah evaluasi menggunakan Precision, Recall, dan F1-Score.
+Berikut adalah langkah-langkah evaluasi menggunakan Precision, Recall, dan F1-Score.
 
-Kode untuk Evaluasi Model
+- Kode untuk Evaluasi Model
 
 ```python
 from sklearn.metrics import precision_score, recall_score, f1_score
