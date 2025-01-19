@@ -152,11 +152,7 @@ Menggunakan fitur-fitur tekstual yang tersedia, seperti kategori tempat wisata d
     - Terbatas hanya pada item yang sudah diketahui preferensinya. Tidak dapat memberikan rekomendasi item baru (cold start problem).
     - Tidak mempertimbangkan interaksi pengguna dengan item lain yang dapat memberikan perspektif tambahan.
 
- ***Contoh penggunaan:***
-   ```python
-   generate_candidates("Surabaya", 110000).head(5)
-    ```
-   ***Output***
+    ***Output***
    ![Capture](https://github.com/user-attachments/assets/da658803-7498-4bd6-9858-098ef6fdcd1f)
 
 2. Collaborative Filtering
