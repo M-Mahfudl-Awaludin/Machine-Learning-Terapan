@@ -142,11 +142,11 @@ Pada tahap modeling, dua pendekatan yang berbeda digunakan untuk membangun siste
 
 1. Content-Based Filtering
 - Proses:
-Menggunakan fitur-fitur tekstual yang tersedia, seperti kategori tempat wisata dan deskripsi, untuk menentukan kesamaan antar tempat wisata. Menghitung kemiripan antara tempat wisata menggunakan TF-IDF Vectorizer dan Cosine Similarity.
+Menggunakan fitur-fitur tekstual seperti kategori tempat wisata dan deskripsi untuk menentukan kesamaan antar tempat wisata. Model ini memanfaatkan TF-IDF Vectorizer untuk memetakan teks menjadi vektor, kemudian menghitung kemiripan antar tempat wisata menggunakan Cosine Similarity.
 
 - Kelebihan:
-    - Tidak membutuhkan data pengguna lain.
-    - Memungkinkan untuk memberikan rekomendasi yang relevan berdasarkan preferensi pengguna sebelumnya.
+    - Tidak memerlukan data interaksi pengguna.
+    - Memberikan rekomendasi berdasarkan preferensi pengguna yang sudah diketahui.
 
 - Kekurangan:
     - Terbatas hanya pada item yang sudah diketahui preferensinya. Tidak dapat memberikan rekomendasi item baru (cold start problem).
@@ -157,10 +157,13 @@ Menggunakan fitur-fitur tekstual yang tersedia, seperti kategori tempat wisata d
 
 2. Collaborative Filtering
 - Proses:
-Menggunakan metode Matrix Factorization untuk membuat prediksi rating berdasarkan pola interaksi antara pengguna dan tempat wisata. Menggunakan Singular Value Decomposition (SVD) untuk membangun matriks yang menghubungkan pengguna dengan tempat wisata.
+Menggunakan pendekatan Neural Collaborative Filtering (NCF) yang dikembangkan menggunakan RecommenderNet. Metode ini mengandalkan embedding untuk memetakan pengguna dan tempat wisata ke dalam ruang vektor laten, dengan pembelajaran dilakukan berdasarkan interaksi pengguna dan tempat wisata.
+
+- Model Arsitektur:
+Model dibangun dengan layer embedding untuk pengguna dan tempat wisata, ditambah bias pada masing-masing layer. Hasil embedding dan bias digabungkan menggunakan operasi dot product dan fungsi aktivasi sigmoid.
 
 - Kelebihan:
-    - Dapat menghasilkan rekomendasi berdasarkan pola interaksi pengguna dengan berbagai tempat wisata, tanpa memerlukan informasi tentang item itu sendiri.
+    - Memberikan rekomendasi berdasarkan pola interaksi antar pengguna dan tempat wisata.
     - Lebih fleksibel dan dapat menangani cold start problem dengan lebih baik, terutama jika ada data pengguna yang cukup.
 
 - Kekurangan:
