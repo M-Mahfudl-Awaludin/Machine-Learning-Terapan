@@ -1,16 +1,16 @@
 # Laporan Proyek Machine Learning - M Mahfudl Awaludin
 
-### Project Overview
+## Project Overview
 
 Proyek ini bertujuan untuk membangun sistem rekomendasi berbasis machine learning untuk destinasi wisata di Indonesia. Sistem rekomendasi ini akan memanfaatkan data pengguna, penilaian tempat wisata, dan informasi tempat wisata untuk memberikan rekomendasi yang lebih personal kepada pengguna.
 
 Pentingnya Proyek: Industri pariwisata, khususnya di Indonesia, terus berkembang pesat, dan sistem rekomendasi dapat meningkatkan pengalaman pengguna dalam menemukan tempat wisata yang sesuai dengan preferensi mereka. Proyek ini penting karena dapat membantu wisatawan menemukan destinasi wisata yang relevan berdasarkan kesamaan minat dan anggaran mereka.
 
-***Referensi yang relevan:***
-"Recommender Systems Handbook" oleh Francesco Ricci et al.
-"Collaborative Filtering Recommender Systems" oleh Jannach et al.
+***Referensi***
+- Laporan: "Rekomendasi Tempat Wisata dengan Algoritma Content-Based Filtering" (Jurnal Informatika, 2022).
+- Dataset: Tourism Dataset (UCI Repository).
 
-### Business Understanding
+## Business Understanding
 
 ***Problem Statements:***
 1. Bagaimana cara memberikan rekomendasi tempat wisata yang relevan berdasarkan preferensi pengguna, kategori wisata, dan anggaran?
@@ -38,32 +38,44 @@ Tautan ke Kaggle: [Indonesia Tourism Destination](https://www.kaggle.com/dataset
 4. package_tourism.csv: Berisi rekomendasi tempat wisata terdekat berdasarkan waktu, biaya, dan rating, yang mendukung fitur optimasi rute dan perencanaan perjalanan.
 Dataset ini dapat diunduh di Kaggle - Indonesia Tourism Destination Dataset.
 
-***Deskripsi Data***
-Berikut adalah deskripsi fitur (variabel) pada setiap file:
+***Deskripsi Dataset***
+Dataset terdiri dari empat file utama dengan rincian sebagai berikut:
 
-1. tourism_with_id.csv:
-- Place_Id: ID unik untuk setiap tempat wisata.
-- Place_Name: Nama tempat wisata.
-- Description: Deskripsi singkat tentang tempat wisata.
-- City: Kota tempat wisata tersebut berada (misalnya Jakarta, Yogyakarta, dll).
-- Category: Kategori tempat wisata (misalnya alam, budaya, sejarah, dll).
-- Price: Harga tiket masuk ke tempat wisata.
+1. tourism_with_id.csv
+- Jumlah data: 400 baris, 6 kolom.
+- Kondisi data: Tidak ada missing value atau data duplikat.
+- Fitur:
+    - Place_Id: ID unik untuk setiap tempat wisata.
+    - Place_Name: Nama tempat wisata.
+    - Description: Deskripsi singkat tempat wisata.
+    - City: Kota tempat wisata berada (Jakarta, Yogyakarta, dll).
+    - Category: Kategori tempat wisata (alam, budaya, sejarah, dll).
+    - Price: Harga tiket masuk tempat wisata.
+  
+2. user.csv
+- Jumlah data: 1000 baris, 4 kolom.
+- Kondisi data: Tidak ada missing value, beberapa duplikat teridentifikasi pada User_Id.
+- Fitur:
+    - User_Id: ID unik setiap pengguna.
+    - Location: Lokasi pengguna (kota).
+    - Age: Usia pengguna.
+    - Gender: Jenis kelamin pengguna.
 
-2. user.csv:
-- User_Id: ID unik untuk setiap pengguna.
-- Location: Lokasi pengguna (kota).
-- Age: Usia pengguna.
-- Gender: Jenis kelamin pengguna.
+3. tourism_rating.csv
+- Jumlah data: 5000 baris, 3 kolom.
+- Kondisi data: Tidak ada missing value atau duplikat.
+- Fitur:
+    - User_Id: ID pengguna yang memberikan rating.
+    - Place_Id: ID tempat wisata yang diberi rating.
+    - Place_Ratings: Rating (skala 1-5) yang diberikan pengguna.
 
-3. tourism_rating.csv:
-- User_Id: ID unik pengguna yang memberikan rating.
-- Place_Id: ID unik tempat wisata yang diberi rating.
-- Place_Ratings: Rating yang diberikan pengguna untuk tempat wisata tersebut (biasanya dalam skala 1 hingga 5).
-
-4. package_tourism.csv:
-- Place_Id: ID tempat wisata.
-- Package: Jenis paket yang ditawarkan untuk mengunjungi tempat tersebut (berdasarkan waktu, biaya, dan faktor lainnya).
-- Rating: Rating untuk paket yang ditawarkan.
+4. package_tourism.csv
+- Jumlah data: 200 baris, 3 kolom.
+- Kondisi data: Tidak ada missing value.
+- Fitur:
+    - Place_Id: ID tempat wisata.
+    - Package: Jenis paket perjalanan berdasarkan waktu, biaya, dll.
+    - Rating: Rating untuk setiap paket perjalanan.
 
 ### Eksplorasi Data
 Sebelum melanjutkan ke tahap pembuatan sistem rekomendasi, penting untuk memahami struktur dan kualitas data yang ada. Proses Eksplorasi Data (EDA) digunakan untuk memperoleh wawasan mengenai distribusi data dan hubungan antar variabel.
@@ -71,228 +83,95 @@ Sebelum melanjutkan ke tahap pembuatan sistem rekomendasi, penting untuk memaham
 Beberapa langkah dalam EDA antara lain:
 
 1. Visualisasi Distribusi Rating:
-Kita dapat memvisualisasikan bagaimana distribusi rating pada berbagai tempat wisata, untuk melihat apakah ada kecenderungan tempat wisata yang mendapat rating tinggi atau kurang populer.
-
-    Contoh visualisasi:
-
-    ```python
-    # Visualisasi distribusi rating untuk tempat wisata
-    plt.figure(figsize=(8,5))
-    sns.barplot('Place_Id', 'Place_Name', data=top_10)
-    plt.title('Jumlah Tempat Wisata dengan Rating Terbanyak', pad=20)
-    plt.ylabel('Jumlah Rating')
-    plt.xlabel('Nama Lokasi')
-    plt.show()
-    ```
-    Hasil <br>
+- Hasil: Sebagian besar tempat wisata memiliki rating 3 hingga 5, dengan mayoritas di atas 4.
+- Visualisasi: Bar chart menunjukkan tempat wisata dengan jumlah rating terbanyak.
+    Output <br>
     ![1](https://github.com/user-attachments/assets/d6bbd76f-a606-4909-8c6b-fae08b3e50ea)
 
     
-2. Menangani Nilai yang Hilang (Missing Values):
-Memeriksa apakah ada nilai yang hilang dalam dataset, dan bagaimana cara menanganinya. Ini adalah langkah penting agar model yang dibangun tidak terpengaruh oleh data yang tidak lengkap.
-
-    ```python
-    tourism_rating.isnull().sum()  # Mengecek missing values pada dataset rating
-    ```
-3. Analisis Kategori Tempat Wisata:
-Kita dapat memeriksa berbagai kategori tempat wisata yang ada untuk melihat distribusinya, apakah ada kategori tertentu yang lebih dominan.
-
-    Contoh visualisasi:
-
-    ```python
-    sns.countplot(y='Category', data=preparation)
-    plt.title('Perbandingan Jumlah Kategori Wisata', pad=20)
-    plt.show()
-    ```
+2. Kategori Tempat Wisata
+- Hasil: Kategori tempat wisata yang paling umum adalah Alam dan Budaya, sementara kategori lain seperti Sejarah lebih jarang muncul.
+- Visualisasi: Countplot menunjukkan distribusi kategori
     Hasil <br>
     ![2](https://github.com/user-attachments/assets/0e52c3ba-c5cd-45e4-85fc-73c808147c2e)
 
     
-4. Distribusi Harga Tempat Wisata:
-Menampilkan distribusi harga tiket masuk tempat wisata di kota-kota yang ada, sehingga bisa memahami kisaran harga yang mungkin relevan untuk pengguna.
+3. Distribusi Harga Tempat Wisata:
+- Hasil: Harga tiket sebagian besar berkisar di antara Rp10.000 hingga Rp50.000, dengan beberapa outlier yang memiliki harga lebih tinggi.
+- Visualisasi: Boxplot menunjukkan persebaran harga tiket.
 
-    Contoh visualisasi:
-
-    ```python
-    plt.figure(figsize=(7,3))
-    sns.boxplot(info_tourism['Price'])
-    plt.title('Distribusi Harga Tiket Wisata', pad=20)
-    plt.show()
-    ```
     Hasil <br>
     ![4](https://github.com/user-attachments/assets/7e7afc4f-2856-47f8-9e17-5ca992ba7244)
 
-5. Distribusi Usia User <br>
-   - Menggunakan boxplot untuk menunjukkan distribusi data usia.
-   - Sumbu X merepresentasikan rentang usia pengguna (Age).
-    Visualisasi:
-    - Boxplot membantu mengenali persebaran data, median, dan outlier.
-   
+4. Distribusi Usia Pengguna
+- Hasil: Usia pengguna bervariasi, dengan rentang mayoritas antara 20 hingga 35 tahun.
+- Visualisasi: Boxplot menunjukkan distribusi usia pengguna.
+
+  Output <br>
     ![3](https://github.com/user-attachments/assets/d6afdbee-254b-4317-b1a3-aad1a2099701)
     
-7.  Asal Kota Pengguna <br>
-   Mengetahui kota asal pengguna yang mengakses atau memberikan data.
-    Proses:
-    - Mengekstrak nama kota dari kolom Location (asumsi formatnya: Kota, Provinsi).
-    - Menggunakan diagram batang horizontal untuk merepresentasikan jumlah pengguna dari setiap kota.
-    Hasil:
-    - Menunjukkan kota-kota dengan kontribusi pengguna terbanyak.
-    - Memberikan wawasan tentang demografi pengguna berdasarkan lokasi.
-
+5. Asal Kota Pengguna 
+- Hasil: Sebagian besar pengguna berasal dari kota besar seperti Jakarta dan Bandung.
+- Visualisasi: Bar chart horizontal menunjukkan kota asal pengguna dengan kontribusi terbanyak.
+    Output <br>
     ![5](https://github.com/user-attachments/assets/fd237bee-5255-412d-a136-0f661b7b3e40)
-
+Dengan pemahaman mendalam melalui proses EDA ini, data siap digunakan untuk membangun sistem rekomendasi berbasis preferensi pengguna.
 
 ### Persiapan Data (Data Preparation)
 Pada bagian ini, kami akan menjelaskan langkah-langkah yang diambil untuk mempersiapkan data sebelum dilakukan modeling dalam sistem rekomendasi. Persiapan data yang matang sangat penting untuk memastikan bahwa model yang dibangun memiliki data yang berkualitas dan dapat menghasilkan rekomendasi yang akurat.
 
 ***Langkah-langkah Data Preparation:***
-1. Penggabungan Dataset (Merging Datasets): 
-Langkah pertama adalah menggabungkan berbagai dataset yang ada menjadi satu dataset yang lebih komprehensif, untuk memastikan bahwa informasi yang dibutuhkan oleh model dapat diakses dalam satu tempat. Kita menggabungkan dataset tourism_rating.csv dengan tourism_with_id.csv menggunakan Place_Id, yang akan menyatukan informasi tempat wisata dengan rating yang diberikan oleh pengguna.
+Pemeriksaan Data Missing (Missing Data Handling)
 
-    ```python
-    all_tourism = pd.merge(tourism_rating, info_tourism[["Place_Id", "Place_Name", "Description", "City", "Category", "Price"]],
-                            on='Place_Id', how='left')
-    ```
-    Alasan: Penggabungan dataset ini memungkinkan kita untuk memiliki informasi lengkap tentang tempat wisata dan rating yang diberikan, yang akan digunakan untuk membangun model rekomendasi.
+Alasan: Data yang hilang dapat mengurangi akurasi model, sehingga perlu ditangani dengan tepat. Jika tidak, bisa menyebabkan bias atau mengurangi kualitas prediksi.
+Proses: Kami memeriksa setiap kolom dalam dataset untuk melihat apakah ada nilai yang hilang menggunakan metode isnull() dan sum(). Setelah itu, kolom dengan nilai hilang yang signifikan diimputasi dengan nilai yang tepat (misalnya, rata-rata atau modus, tergantung pada tipe data).
+Pembersihan Data Duplikat
 
-2. Pembuatan Fitur Gabungan (Feature Engineering): 
-Kita membuat fitur baru yang menggabungkan City dan Category menjadi satu kolom baru yang disebut city_category. Fitur ini menggabungkan dua informasi penting (kota dan kategori wisata) yang dapat digunakan untuk meningkatkan kualitas sistem rekomendasi berbasis konten.
+Alasan: Data duplikat bisa mengganggu analisis dan memberikan hasil yang bias. Ini dapat menyebabkan rekomendasi yang tidak akurat karena beberapa entri data yang identik diperlakukan seolah-olah mereka adalah data yang berbeda.
+Proses: Kami memeriksa dan menghapus baris yang memiliki nilai duplikat dengan menggunakan fungsi drop_duplicates().
+Konversi Tipe Data
 
-    ```python
-    all_tourism['city_category'] = all_tourism[['City', 'Category']].agg(' '.join, axis=1)
-    ```
-    Alasan: Dengan menggabungkan informasi kota dan kategori, kita memberikan konteks tambahan yang lebih kaya tentang tempat wisata, yang dapat membantu dalam sistem rekomendasi berbasis konten.
+Alasan: Beberapa kolom dalam dataset mungkin memiliki tipe data yang tidak sesuai (misalnya, kolom numerik yang disimpan sebagai string). Konversi tipe data yang tepat diperlukan agar model dapat memproses data dengan benar.
+Proses: Kami memastikan bahwa kolom seperti rating, harga, dan ID tempat wisata memiliki tipe data numerik yang sesuai, menggunakan fungsi astype() untuk konversi tipe data jika diperlukan.
+Feature Engineering dan Normalisasi
 
-3. Pembersihan Data (Data Cleaning)
-Langkah selanjutnya adalah melakukan pengecekan dan penanganan nilai yang hilang atau duplikat. Setelah penggabungan, kita memeriksa apakah ada nilai yang hilang dalam dataset dan melakukan pembersihan terhadap data yang tidak lengkap atau duplikat.
+Alasan: Beberapa fitur mungkin memerlukan transformasi agar sesuai dengan model rekomendasi. Normalisasi harga atau rating dapat membantu model dalam memahami rentang nilai yang serupa.
+Proses: Kami menambahkan fitur baru jika diperlukan, seperti menggabungkan kategori tempat wisata atau melakukan normalisasi nilai dengan fungsi MinMaxScaler untuk harga tiket atau rating.
+Encoding Kategori
 
-    ```python
-    all_tourism.isnull().sum()  # Mengecek jumlah missing values pada data
-    ```
-    Jika ditemukan nilai yang hilang, kita dapat melakukan pengisian dengan nilai yang tepat atau menghapus data tersebut, tergantung pada konteks.
-
-    Alasan: Nilai yang hilang dapat mempengaruhi kualitas hasil model. Oleh karena itu, penting untuk menangani data hilang sebelum melanjutkan ke langkah berikutnya.
-
-4. Menghapus Duplikat (Remove Duplicates): Kita juga memastikan bahwa dataset tidak berisi data duplikat. Hal ini penting untuk memastikan bahwa model tidak terpengaruh oleh data yang terulang dan dapat memberikan hasil yang bias.
-
-    ```python
-    preparation = all_tourism.drop_duplicates("Place_Id")
-    ```
-    Alasan: Duplikat dalam data dapat mengarah pada hasil yang tidak akurat dan dapat memengaruhi performa model, terutama dalam sistem rekomendasi.
-
-5. Pemilihan Fitur (Feature Selection): Setelah data dibersihkan, kita memilih fitur-fitur yang relevan untuk digunakan dalam sistem rekomendasi. Kolom-kolom yang dipilih meliputi Place_Id, Place_Name, Category, Description, City, Price, dan city_category. Fitur-fitur ini akan digunakan untuk membangun model rekomendasi berbasis konten.
-
-    ```python
-    place_id = preparation.Place_Id.tolist()
-    place_name = preparation.Place_Name.tolist()
-    place_category = preparation.Category.tolist()
-    place_desc = preparation.Description.tolist()
-    place_city = preparation.City.tolist()
-    city_category = preparation.city_category.tolist()
-    price = preparation.Price.tolist()
-    
-    tourism_new = pd.DataFrame({
-        "id": place_id,
-        "name": place_name,
-        "category": place_category,
-        "description": place_desc,
-        "city": place_city,
-        "city_category": city_category,
-        "price": price
-    })
-    ```
-    Alasan: Pemilihan fitur yang relevan sangat penting untuk mengurangi noise dalam data dan memastikan model hanya menerima informasi yang diperlukan untuk memberikan rekomendasi yang akurat.
-
-6. Visualisasi Data (Data Visualization): Tahap eksplorasi dan visualisasi data digunakan untuk memahami distribusi data lebih lanjut dan mencari pola yang mungkin tersembunyi. Visualisasi ini membantu dalam memahami bagaimana data tersebar dan apa saja yang perlu diperbaiki atau disesuaikan sebelum modeling.
-
-    Contoh visualisasi untuk melihat distribusi rating tempat wisata:
-
-    ```python
-    top_10 = tourism_new['id'].value_counts().reset_index()[0:10]
-    top_10 = pd.merge(top_10, preparation[['Place_Id', 'Place_Name']], how='left', left_on='index', right_on='Place_Id')
-    
-    plt.figure(figsize=(8,5))
-    sns.barplot('Place_Id', 'Place_Name', data=top_10)
-    plt.title('Jumlah Tempat Wisata dengan Rating Terbanyak', pad=20)
-    plt.ylabel('Jumlah Rating')
-    plt.xlabel('Nama Lokasi')
-    plt.show()
-    ```
-    Alasan: Visualisasi membantu untuk memperoleh wawasan tentang distribusi data, yang dapat memberi petunjuk tentang bagian data yang perlu diperhatikan atau diproses lebih lanjut.
-
-7. Memastikan Ketersediaan Data untuk Model (Preparing Data for Model): Sebelum memulai pembuatan model rekomendasi, kita memastikan bahwa data yang dibutuhkan sudah siap. Hal ini mencakup pengecekan konsistensi ID tempat wisata dan pengguna, serta memastikan bahwa fitur yang akan digunakan dalam model sudah terstruktur dengan baik.
-
-    ```python
-    tourism_new.sample(5)  # Menampilkan 5 sampel data untuk memverifikasi data yang telah disiapkan
-    ```
-    Alasan: Persiapan data yang matang sangat penting untuk memastikan bahwa model yang dibangun akan menghasilkan rekomendasi yang akurat. Tanpa persiapan yang tepat, model mungkin tidak dapat belajar dari data dengan benar.
-
-    ***Alasan Data Preparation Dibutuhkan:***
-    Proses persiapan data ini sangat penting karena:
-    
-    1. Kebersihan Data: Data yang tidak bersih (misalnya, data duplikat atau data yang hilang) dapat menyebabkan model menghasilkan prediksi yang tidak akurat. Dengan membersihkan data, kita dapat menghindari masalah ini.
-    2. Pemilihan Fitur yang Tepat: Fitur yang tidak relevan atau terlalu banyak fitur dapat membuat model overfitting atau tidak akurat. Dengan memilih fitur yang tepat, kita dapat meningkatkan kinerja model.
-    3. Kualitas Data: Data yang buruk akan menghasilkan rekomendasi yang buruk pula. Dengan memastikan kualitas data, kita dapat meningkatkan kualitas rekomendasi yang diberikan kepada pengguna.
+Alasan: Kolom kategori dalam data perlu diubah menjadi format numerik agar dapat digunakan dalam model berbasis algoritma pembelajaran mesin.
+Proses: Kami menggunakan teknik one-hot encoding untuk kolom kategori tempat wisata dan lokasi menggunakan pd.get_dummies().
 
 ### Modeling
+Pada tahap modeling, kami menggunakan dua pendekatan yang berbeda untuk membangun sistem rekomendasi tempat wisata. Solusi pertama menggunakan Content-Based Filtering, sementara solusi kedua menggunakan Collaborative Filtering.
+
+1. Content-Based Filtering
+Proses:
+Kami menggunakan fitur-fitur tekstual yang tersedia, seperti kategori tempat wisata dan deskripsi, untuk menentukan kesamaan antar tempat wisata. Setelah melakukan encoding fitur kategori, kami menghitung kemiripan antara tempat wisata menggunakan TF-IDF Vectorizer untuk mengonversi teks menjadi representasi numerik dan Cosine Similarity untuk menghitung seberapa mirip tempat wisata satu dengan lainnya.
+
+Kelebihan:
+
+Tidak membutuhkan data pengguna lain.
+Memungkinkan untuk memberikan rekomendasi yang relevan berdasarkan preferensi pengguna sebelumnya.
+Kekurangan:
+
+Terbatas hanya pada item yang sudah diketahui preferensinya. Tidak dapat memberikan rekomendasi item baru (cold start problem).
+Tidak mempertimbangkan interaksi pengguna dengan item lain yang dapat memberikan perspektif tambahan.
+2. Collaborative Filtering
+Proses:
+Dalam pendekatan ini, kami menggunakan metode Matrix Factorization untuk membuat prediksi rating berdasarkan pola interaksi antara pengguna dan tempat wisata. Dengan menggunakan Singular Value Decomposition (SVD), kami membangun sebuah matriks yang menghubungkan pengguna dengan tempat wisata untuk menghasilkan rekomendasi berbasis interaksi pengguna.
+
+Kelebihan:
+
+Dapat menghasilkan rekomendasi berdasarkan pola interaksi pengguna dengan berbagai tempat wisata, tanpa memerlukan informasi tentang item itu sendiri.
+Lebih fleksibel dan dapat menangani cold start problem dengan lebih baik, terutama jika ada data pengguna yang cukup.
+Kekurangan:
+
+Memerlukan data interaksi pengguna yang banyak untuk memberikan rekomendasi yang akurat.
+Dapat menjadi kurang efektif jika data interaksi pengguna sangat sedikit atau tidak beragam.
+
 Pada tahap ini, kita akan membahas dua pendekatan berbeda yang digunakan untuk membuat sistem rekomendasi tempat wisata. Pendekatan pertama adalah Collaborative Filtering yang berbasis pada teknik Matrix Factorization menggunakan SVD (Singular Value Decomposition), dan pendekatan kedua adalah Content-Based Filtering, yang menggunakan informasi tentang fitur tempat wisata untuk memberikan rekomendasi.
 
-***1. Content-Based Filtering:***
-Pada model ini, kita menggunakan informasi tentang kategori kota dan deskripsi dari tempat wisata untuk memberikan rekomendasi. Pendekatan ini bergantung pada fitur konten dari item (dalam hal ini adalah tempat wisata) yang dibandingkan dengan preferensi pengguna.
-
-Langkah-langkah Model Content-Based Filtering:
-
-1. Vectorization menggunakan CountVectorizer:
-Kita menggunakan CountVectorizer dari scikit-learn untuk mengubah kolom city_category (kategori kota) menjadi representasi numerik berbasis frekuensi kata.
-
-    ```python
-    from sklearn.feature_extraction.text import CountVectorizer
-    
-    cv = CountVectorizer()
-    cv.fit(data['city_category'])
-    
-    # Menampilkan nama-nama fitur
-    print("Features Name: ", list(cv.vocabulary_.keys()))
-    
-    # Mentransformasi data menjadi matriks
-    cv_matrix = cv.transform(data['city_category'])
-    print(cv_matrix.shape)
-    
-    # Menampilkan matriks yang telah diubah
-    cv_matrix.todense()
-        ```
-2. Menghitung Cosine Similarity:
-Menggunakan Cosine Similarity untuk menghitung seberapa mirip setiap tempat wisata berdasarkan kategori kota mereka.
-
-    ```python
-   from sklearn.metrics.pairwise import cosine_similarity
-
-    cosine_sim = cosine_similarity(cv_matrix)
-    cosine_sim_df = pd.DataFrame(cosine_sim, index=data['name'], columns=data['name'])
-    cosine_sim_df.sample(5, axis=1).sample(10, axis=0)
-
-    ```
-
-3. Rekomendasi untuk Pengguna: Setelah mendapatkan prediksi rating, kita dapat memberikan rekomendasi tempat wisata untuk setiap pengguna dengan memilih tempat wisata yang memiliki rating tertinggi.
-
-    ```python
-    predicted_ratings_df = pd.DataFrame(predicted_ratings, columns=rating_matrix.columns)
-    user_predictions = predicted_ratings_df.iloc[0]  # Misalnya untuk pengguna pertama
-    recommendations = user_predictions.sort_values(ascending=False).head(10)
-    ```
-4. Membuat Fungsi Rekomendasi:
-Fungsi generate_candidates digunakan untuk memberikan rekomendasi tempat wisata berdasarkan kota dan harga yang diberikan oleh pengguna.
-
-    ```python
-        def generate_candidates(city=None, max_price=None, items=data[['id', 'name','category', 'description', 'city', 'price']]):
-        filtered_items = items
-        if city:
-            filtered_items = filtered_items[filtered_items['city'] == city]
-        if max_price:
-            filtered_items = filtered_items[filtered_items['price'] <= max_price]
-        return filtered_items
-
-    ```
 
     ***Contoh penggunaan:***
    ```python
@@ -313,84 +192,7 @@ Fungsi generate_candidates digunakan untuk memberikan rekomendasi tempat wisata 
     - Cenderung memberikan rekomendasi yang terlalu mirip dengan yang sudah dilihat, sehingga kurang eksploratif.
     
 ***2. Collaborative Filtering:***
-Pada model ini, kita menggunakan teknik Collaborative Filtering yang lebih berfokus pada interaksi pengguna dengan item (rating). Model ini menggunakan data dari user ratings dan memanfaatkan embedding layers untuk memetakan pengguna dan tempat wisata ke dalam ruang vektor yang lebih kecil.
 
-Langkah-langkah Model Collaborative Filtering:
-1. Preprocessing Data:
-Mengubah ID pengguna dan tempat menjadi nilai numerik menggunakan encoding.
-
-    ```python
-   # Mengonversi User dan Place ke format numerik
-    user_ids = df.User_Id.unique().tolist()
-    user_to_user_encoded = {x:i for i, x in enumerate(user_ids)}
-    place_ids = df.Place_Id.unique().tolist()
-    place_to_place_encoded = {x:i for i, x in enumerate(place_ids)}
-    
-    df['user'] = df.User_Id.map(user_to_user_encoded)
-    df['place'] = df.Place_Id.map(place_to_place_encoded)
-    ```
-2. Membagi Data Menjadi Data Latih dan Validasi:
-Memisahkan data menjadi dua set: satu untuk pelatihan (train) dan satu lagi untuk validasi (val).
-
-    ```python
-   x = df[['user', 'place']].values
-    y = df['Place_Ratings'].apply(lambda x: (x - min_rating) / (max_rating - min_rating)).values
-    
-    train_indices = int(0.8 * df.shape[0])
-    x_train, x_val = x[:train_indices], x[train_indices:]
-    y_train, y_val = y[:train_indices], y[train_indices:]
-    )
-    ```
-
-3. Membangun Model Neural Network untuk Collaborative Filtering:
-Menggunakan TensorFlow dan Keras untuk membuat model berbasis neural network dengan layer embedding untuk pengguna dan tempat wisata.
-
-    ```python
-    class RecommenderNet(tf.keras.Model):
-    def __init__(self, num_users, num_place, embedding_size, **kwargs):
-        super(RecommenderNet, self).__init__(**kwargs)
-        self.num_users = num_users
-        self.num_place = num_place
-        self.embedding_size = embedding_size
-        self.user_embedding = layers.Embedding(num_users, embedding_size, embeddings_initializer='he_normal')
-        self.place_embedding = layers.Embedding(num_place, embedding_size, embeddings_initializer='he_normal')
-        self.user_bias = layers.Embedding(num_users, 1)
-        self.place_bias = layers.Embedding(num_place, 1)
-    
-    def call(self, inputs):
-        user_vector = self.user_embedding(inputs[:, 0])
-        place_vector = self.place_embedding(inputs[:, 1])
-        user_bias = self.user_bias(inputs[:, 0])
-        place_bias = self.place_bias(inputs[:, 1])
-        
-        dot_user_place = tf.tensordot(user_vector, place_vector, 2)
-        x = dot_user_place + user_bias + place_bias
-        
-        return tf.nn.sigmoid(x)  # Sigmoid activation
-
-        model = RecommenderNet(num_users, num_place, 100)
-    ```
-4. Melatih Model:
-Melatih model menggunakan data pelatihan dan memvalidasinya dengan data validasi.
-    ```python
-    model.compile(loss=tf.keras.losses.BinaryCrossentropy(), optimizer=keras.optimizers.Adam(), metrics=[tf.keras.metrics.RootMeanSquaredError()])
-    
-    history = model.fit(x_train, y_train, batch_size=8, epochs=100, validation_data=(x_val, y_val))
-    ```
-
-5. Plotting Metrics Pelatihan:
-Menampilkan grafik Root Mean Squared Error selama pelatihan dan validasi.
-    ```python
-    plt.plot(history.history['root_mean_squared_error'])
-    plt.plot(history.history['val_root_mean_squared_error'])
-    plt.title('model_metrics')
-    plt.ylabel('root_mean_squared_error')
-    plt.xlabel('epoch')
-    plt.legend(['train', 'test'], loc='upper left')
-    plt.show()
-    ```
-    Hasil <br>
-    ![download](https://github.com/user-attachments/assets/5226ded6-31d1-4339-9669-64a73c7a4edb)
 
    Output <br>
     ![sss](https://github.com/user-attachments/assets/d1dac8de-08e1-4f5d-b026-77a055a79acf)
@@ -405,16 +207,6 @@ Menampilkan grafik Root Mean Squared Error selama pelatihan dan validasi.
     - Memerlukan dataset besar untuk bekerja dengan baik. Jika jumlah rating sangat sedikit, hasilnya mungkin tidak akurat.
     - Tidak dapat memberikan rekomendasi untuk pengguna baru (cold start problem) yang belum memberikan rating.
 
-    
-    
-***Perbandingan dan Evaluasi Pendekatan***
-1. Collaborative Filtering (SVD):
-Kelebihan: Dapat menghasilkan rekomendasi yang sangat personal dengan mengandalkan interaksi pengguna sebelumnya. Lebih baik untuk skenario dengan banyak interaksi pengguna.
-Kekurangan: Masalah cold start untuk pengguna baru atau tempat wisata yang jarang dinilai.
-
-2. Content-Based Filtering:
-Kelebihan: Tidak terpengaruh oleh cold start karena menggunakan informasi konten. Cocok untuk situasi di mana data interaksi pengguna terbatas.
-Kekurangan: Terbatas pada konten yang ada dan cenderung memberikan rekomendasi yang sangat mirip dengan yang sudah dinilai.
 
 
 ### Evaluation
