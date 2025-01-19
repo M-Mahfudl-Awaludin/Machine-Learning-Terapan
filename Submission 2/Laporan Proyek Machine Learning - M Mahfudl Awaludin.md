@@ -20,7 +20,7 @@ Pentingnya Proyek: Industri pariwisata, khususnya di Indonesia, terus berkembang
 1. Mengembangkan sistem rekomendasi yang memanfaatkan data wisata dan rating untuk menyarankan destinasi yang sesuai dengan preferensi pengguna.
 2. Menyediakan rekomendasi berdasarkan kategori wisata dan lokasi yang relevan dengan pengguna serta anggaran mereka.
 
-***Solution Approach:***
+***Solusi***
 1. Content-Based Filtering: Sistem ini menggunakan informasi terkait kategori dan lokasi wisata, dengan menggunakan teknik vectorisasi seperti TF-IDF dan cosine similarity untuk menghitung kesamaan antar tempat wisata.
 2. Collaborative Filtering: Model ini menggunakan data rating pengguna untuk memprediksi rating yang belum diberikan oleh pengguna terhadap tempat wisata, menggunakan pendekatan neural network berbasis embeddings.
 
@@ -85,7 +85,8 @@ Kita dapat memvisualisasikan bagaimana distribusi rating pada berbagai tempat wi
     plt.show()
     ```
     Hasil <br>
-    ![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/3d32b69212a4f70d442c37124d000b3ca5eeb746/Submission%202/assets/1.png)
+    ![1](https://github.com/user-attachments/assets/d6bbd76f-a606-4909-8c6b-fae08b3e50ea)
+
     
 2. Menangani Nilai yang Hilang (Missing Values):
 Memeriksa apakah ada nilai yang hilang dalam dataset, dan bagaimana cara menanganinya. Ini adalah langkah penting agar model yang dibangun tidak terpengaruh oleh data yang tidak lengkap.
@@ -104,7 +105,8 @@ Kita dapat memeriksa berbagai kategori tempat wisata yang ada untuk melihat dist
     plt.show()
     ```
     Hasil <br>
-    ![download](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/78fe5b17f05db70d420d19260fad1d275d47dc37/Submission%202/assets/2.png)
+    ![2](https://github.com/user-attachments/assets/0e52c3ba-c5cd-45e4-85fc-73c808147c2e)
+
     
 4. Distribusi Harga Tempat Wisata:
 Menampilkan distribusi harga tiket masuk tempat wisata di kota-kota yang ada, sehingga bisa memahami kisaran harga yang mungkin relevan untuk pengguna.
@@ -118,7 +120,27 @@ Menampilkan distribusi harga tiket masuk tempat wisata di kota-kota yang ada, se
     plt.show()
     ```
     Hasil <br>
-    ![](https://github.com/M-Mahfudl-Awaludin/Machine-Learning-Terapan/blob/78fe5b17f05db70d420d19260fad1d275d47dc37/Submission%202/assets/4.png)
+    ![4](https://github.com/user-attachments/assets/7e7afc4f-2856-47f8-9e17-5ca992ba7244)
+
+5. Distribusi Usia User <br>
+   - Menggunakan boxplot untuk menunjukkan distribusi data usia.
+   - Sumbu X merepresentasikan rentang usia pengguna (Age).
+    Visualisasi:
+    - Boxplot membantu mengenali persebaran data, median, dan outlier.
+   
+    ![3](https://github.com/user-attachments/assets/d6afdbee-254b-4317-b1a3-aad1a2099701)
+    
+7.  Asal Kota Pengguna <br>
+   Mengetahui kota asal pengguna yang mengakses atau memberikan data.
+    Proses:
+    - Mengekstrak nama kota dari kolom Location (asumsi formatnya: Kota, Provinsi).
+    - Menggunakan diagram batang horizontal untuk merepresentasikan jumlah pengguna dari setiap kota.
+    Hasil:
+    - Menunjukkan kota-kota dengan kontribusi pengguna terbanyak.
+    - Memberikan wawasan tentang demografi pengguna berdasarkan lokasi.
+
+    ![5](https://github.com/user-attachments/assets/fd237bee-5255-412d-a136-0f661b7b3e40)
+
 
 ### Persiapan Data (Data Preparation)
 Pada bagian ini, kami akan menjelaskan langkah-langkah yang diambil untuk mempersiapkan data sebelum dilakukan modeling dalam sistem rekomendasi. Persiapan data yang matang sangat penting untuk memastikan bahwa model yang dibangun memiliki data yang berkualitas dan dapat menghasilkan rekomendasi yang akurat.
@@ -277,16 +299,18 @@ Fungsi generate_candidates digunakan untuk memberikan rekomendasi tempat wisata 
    generate_candidates("Surabaya", 110000).head(5)
     ```
    ***Output***
-   ![download]()
+   ![Capture](https://github.com/user-attachments/assets/da658803-7498-4bd6-9858-098ef6fdcd1f)
+
    
-    ***Kelebihan dan Kekurangan SVD (Collaborative Filtering)***
+   ***Kelebihan dan Kekurangan Content-Based Filtering***
+    
     Kelebihan:
-    - Menggunakan data interaksi pengguna tanpa memerlukan informasi eksplisit tentang konten.
-    - Dapat memberikan rekomendasi yang lebih personal karena berfokus pada pola preferensi pengguna sebelumnya.
+    - Tidak terpengaruh oleh cold start problem karena tidak memerlukan data interaksi pengguna sebelumnya.
+    - Dapat memberikan rekomendasi berdasarkan kesamaan fitur, yang berguna jika informasi konten tersedia dan relevan.
     
     Kekurangan:
-    - Memerlukan dataset besar untuk bekerja dengan baik. Jika jumlah rating sangat sedikit, hasilnya mungkin tidak akurat.
-    - Tidak dapat memberikan rekomendasi untuk pengguna baru (cold start problem) yang belum memberikan rating.
+    - Menggunakan konten yang tersedia, sehingga jika deskripsi atau fitur tidak kaya, hasilnya bisa kurang akurat.
+    - Cenderung memberikan rekomendasi yang terlalu mirip dengan yang sudah dilihat, sehingga kurang eksploratif.
     
 ***2. Collaborative Filtering:***
 Pada model ini, kita menggunakan teknik Collaborative Filtering yang lebih berfokus pada interaksi pengguna dengan item (rating). Model ini menggunakan data dari user ratings dan memanfaatkan embedding layers untuk memetakan pengguna dan tempat wisata ke dalam ruang vektor yang lebih kecil.
@@ -366,17 +390,22 @@ Menampilkan grafik Root Mean Squared Error selama pelatihan dan validasi.
     plt.show()
     ```
     Hasil <br>
-    ![download]()
+    ![download](https://github.com/user-attachments/assets/5226ded6-31d1-4339-9669-64a73c7a4edb)
 
-    ***Kelebihan dan Kekurangan Content-Based Filtering***
-    
+   Output <br>
+    ![sss](https://github.com/user-attachments/assets/d1dac8de-08e1-4f5d-b026-77a055a79acf)
+
+
+    ***Kelebihan dan Kekurangan SVD (Collaborative Filtering)***
     Kelebihan:
-    - Tidak terpengaruh oleh cold start problem karena tidak memerlukan data interaksi pengguna sebelumnya.
-    - Dapat memberikan rekomendasi berdasarkan kesamaan fitur, yang berguna jika informasi konten tersedia dan relevan.
+    - Menggunakan data interaksi pengguna tanpa memerlukan informasi eksplisit tentang konten.
+    - Dapat memberikan rekomendasi yang lebih personal karena berfokus pada pola preferensi pengguna sebelumnya.
     
     Kekurangan:
-    - Menggunakan konten yang tersedia, sehingga jika deskripsi atau fitur tidak kaya, hasilnya bisa kurang akurat.
-    - Cenderung memberikan rekomendasi yang terlalu mirip dengan yang sudah dilihat, sehingga kurang eksploratif.
+    - Memerlukan dataset besar untuk bekerja dengan baik. Jika jumlah rating sangat sedikit, hasilnya mungkin tidak akurat.
+    - Tidak dapat memberikan rekomendasi untuk pengguna baru (cold start problem) yang belum memberikan rating.
+
+    
     
 ***Perbandingan dan Evaluasi Pendekatan***
 1. Collaborative Filtering (SVD):
@@ -387,8 +416,6 @@ Kekurangan: Masalah cold start untuk pengguna baru atau tempat wisata yang jaran
 Kelebihan: Tidak terpengaruh oleh cold start karena menggunakan informasi konten. Cocok untuk situasi di mana data interaksi pengguna terbatas.
 Kekurangan: Terbatas pada konten yang ada dan cenderung memberikan rekomendasi yang sangat mirip dengan yang sudah dinilai.
 
-3. Top-N Recommendations
-Berdasarkan kedua pendekatan tersebut, kita dapat memberikan Top-10 Recommendations untuk pengguna berdasarkan Collaborative Filtering (SVD) dan Content-Based Filtering. Hasil dari kedua model ini bisa dibandingkan dan digunakan secara bersamaan untuk memberikan rekomendasi yang lebih baik dan beragam.
 
 ### Evaluation
 
@@ -398,15 +425,24 @@ Pada tahap ini, kita akan membahas metrik evaluasi yang digunakan untuk menilai 
 Untuk sistem rekomendasi, terdapat beberapa metrik evaluasi yang sering digunakan. Dalam proyek ini, kita akan fokus pada dua metrik utama yang sesuai dengan konteks Collaborative Filtering (SVD) dan Content-Based Filtering, yaitu Precision@k dan Recall@k.
 
 1. Precision@k
-Precision@k mengukur seberapa banyak item yang direkomendasikan di posisi k yang relevan bagi pengguna. Formula dari Precision@k adalah sebagai berikut:
+Precision@k mengukur seberapa banyak item yang direkomendasikan di posisi k yang relevan bagi pengguna.
+Formula dari Precision@k adalah sebagai berikut: <br>
+![1](https://github.com/user-attachments/assets/d254d310-2a89-47e3-8867-917aa45762e2)
+
 Penjelasan:
 Metrik ini digunakan untuk menilai akurasi dari rekomendasi yang diberikan. Sebagai contoh, jika kita memberikan 10 rekomendasi tempat wisata kepada pengguna, maka Precision@k akan mengukur berapa banyak dari 10 tempat wisata tersebut yang relevan dengan preferensi pengguna.
-2. Recall@k
-Recall@k mengukur seberapa banyak item relevan yang berhasil ditemukan dari seluruh item relevan yang ada. Formula dari Recall@k adalah sebagai berikut:
+3. Recall@k
+Recall@k mengukur seberapa banyak item relevan yang berhasil ditemukan dari seluruh item relevan yang ada. 
+Formula dari Recall@k adalah sebagai berikut: <br>
+![2](https://github.com/user-attachments/assets/4174d897-a245-45f6-8439-03b3bf291ef3)
+
 Penjelasan : 
 Metrik ini digunakan untuk menilai sejauh mana rekomendasi kita dapat mencakup seluruh item relevan yang mungkin diinginkan oleh pengguna. Dalam konteks ini, recall mengukur kemampuan model untuk menyarankan tempat wisata yang relevan dari seluruh tempat wisata yang sesuai dengan preferensi pengguna.
-3. F1-Score@k
-F1-Score adalah metrik gabungan yang menggabungkan Precision dan Recall. Formula untuk F1-Score adalah:
+4. F1-Score@k
+F1-Score adalah metrik gabungan yang menggabungkan Precision dan Recall. 
+Formula untuk F1-Score adalah: <br>
+![3](https://github.com/user-attachments/assets/0bda7818-bfb3-4cb8-b143-7289cca627f4)
+
 Penjelasan:
 Metrik ini memberikan gambaran yang lebih menyeluruh mengenai kinerja model. F1-Score menjadi penting ketika kita ingin menyeimbangkan Precision dan Recall dalam memberikan rekomendasi. F1-Score digunakan untuk mengevaluasi kualitas rekomendasi yang diberikan dengan memperhatikan baik seberapa relevan rekomendasi tersebut (Precision) serta seberapa banyak item relevan yang bisa ditemukan (Recall).
 
@@ -526,6 +562,9 @@ print(f"Collaborative Filtering - Precision@5: {precision_cf_k:.4f}")
 print(f"Collaborative Filtering - Recall@5: {recall_cf_k:.4f}")
 print(f"Collaborative Filtering - F1-Score@5: {f1_cf_k:.4f}")
 ```
+Output <br>
+![sasa](https://github.com/user-attachments/assets/d443dd61-e04b-4e2d-a08a-aba2ef9ab14f)
+
 
 Berikut adalah penjelasan mengenai hasil evaluasi dari dua model rekomendasi: Content-Based Filtering dan Collaborative Filtering:
 
