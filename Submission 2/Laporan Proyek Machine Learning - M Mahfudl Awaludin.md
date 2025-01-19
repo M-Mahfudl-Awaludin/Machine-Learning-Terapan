@@ -43,7 +43,6 @@ Dataset terdiri dari empat file utama dengan rincian sebagai berikut:
 
 1. tourism_with_id.csv
 - Jumlah data: 400 baris, 6 kolom.
-- Kondisi data: Tidak ada missing value atau data duplikat.
 - Fitur:
     - Place_Id: ID unik untuk setiap tempat wisata.
     - Place_Name: Nama tempat wisata.
@@ -54,7 +53,6 @@ Dataset terdiri dari empat file utama dengan rincian sebagai berikut:
   
 2. user.csv
 - Jumlah data: 1000 baris, 4 kolom.
-- Kondisi data: Tidak ada missing value, beberapa duplikat teridentifikasi pada User_Id.
 - Fitur:
     - User_Id: ID unik setiap pengguna.
     - Location: Lokasi pengguna (kota).
@@ -63,7 +61,6 @@ Dataset terdiri dari empat file utama dengan rincian sebagai berikut:
 
 3. tourism_rating.csv
 - Jumlah data: 5000 baris, 3 kolom.
-- Kondisi data: Tidak ada missing value atau duplikat.
 - Fitur:
     - User_Id: ID pengguna yang memberikan rating.
     - Place_Id: ID tempat wisata yang diberi rating.
@@ -71,7 +68,6 @@ Dataset terdiri dari empat file utama dengan rincian sebagai berikut:
 
 4. package_tourism.csv
 - Jumlah data: 200 baris, 3 kolom.
-- Kondisi data: Tidak ada missing value.
 - Fitur:
     - Place_Id: ID tempat wisata.
     - Package: Jenis paket perjalanan berdasarkan waktu, biaya, dll.
@@ -80,7 +76,7 @@ Dataset terdiri dari empat file utama dengan rincian sebagai berikut:
 ### Eksplorasi Data
 Sebelum melanjutkan ke tahap pembuatan sistem rekomendasi, penting untuk memahami struktur dan kualitas data yang ada. Proses Eksplorasi Data (EDA) digunakan untuk memperoleh wawasan mengenai distribusi data dan hubungan antar variabel.
 
-Beberapa langkah dalam EDA antara lain:
+**Visualisasi Data:**
 
 1. Visualisasi Distribusi Rating:
 - Hasil: Sebagian besar tempat wisata memiliki rating 3 hingga 5, dengan mayoritas di atas 4.
@@ -117,101 +113,71 @@ Beberapa langkah dalam EDA antara lain:
     ![5](https://github.com/user-attachments/assets/fd237bee-5255-412d-a136-0f661b7b3e40)
 Dengan pemahaman mendalam melalui proses EDA ini, data siap digunakan untuk membangun sistem rekomendasi berbasis preferensi pengguna.
 
-### Persiapan Data (Data Preparation)
-Pada bagian ini, kami akan menjelaskan langkah-langkah yang diambil untuk mempersiapkan data sebelum dilakukan modeling dalam sistem rekomendasi. Persiapan data yang matang sangat penting untuk memastikan bahwa model yang dibangun memiliki data yang berkualitas dan dapat menghasilkan rekomendasi yang akurat.
+## Data Preparation
+ada bagian ini, langkah-langkah yang diambil untuk mempersiapkan data sebelum dilakukan modeling dalam sistem rekomendasi dijelaskan. Persiapan data yang matang sangat penting untuk memastikan bahwa model yang dibangun memiliki data yang berkualitas dan dapat menghasilkan rekomendasi yang akurat.
 
 ***Langkah-langkah Data Preparation:***
-Pemeriksaan Data Missing (Missing Data Handling)
+1. Pemeriksaan Data Missing (Missing Data Handling)
+- Alasan: Data yang hilang dapat mengurangi akurasi model, sehingga perlu ditangani dengan tepat. Jika tidak, bisa menyebabkan bias atau mengurangi kualitas prediksi.
+- Proses: Memeriksa setiap kolom dalam dataset untuk melihat apakah ada nilai yang hilang menggunakan metode isnull() dan sum(). Kolom dengan nilai hilang yang signifikan diimputasi dengan nilai yang tepat.
 
-Alasan: Data yang hilang dapat mengurangi akurasi model, sehingga perlu ditangani dengan tepat. Jika tidak, bisa menyebabkan bias atau mengurangi kualitas prediksi.
-Proses: Kami memeriksa setiap kolom dalam dataset untuk melihat apakah ada nilai yang hilang menggunakan metode isnull() dan sum(). Setelah itu, kolom dengan nilai hilang yang signifikan diimputasi dengan nilai yang tepat (misalnya, rata-rata atau modus, tergantung pada tipe data).
-Pembersihan Data Duplikat
+2. Pembersihan Data Duplikat
+- Alasan: Data duplikat bisa mengganggu analisis dan memberikan hasil yang bias. Ini dapat menyebabkan rekomendasi yang tidak akurat karena beberapa entri data yang identik diperlakukan seolah-olah mereka adalah data yang berbeda.
+- Proses: Memeriksa dan menghapus baris yang memiliki nilai duplikat dengan menggunakan fungsi drop_duplicates().
 
-Alasan: Data duplikat bisa mengganggu analisis dan memberikan hasil yang bias. Ini dapat menyebabkan rekomendasi yang tidak akurat karena beberapa entri data yang identik diperlakukan seolah-olah mereka adalah data yang berbeda.
-Proses: Kami memeriksa dan menghapus baris yang memiliki nilai duplikat dengan menggunakan fungsi drop_duplicates().
-Konversi Tipe Data
+3. Konversi Tipe Data
+- Alasan: Beberapa kolom dalam dataset mungkin memiliki tipe data yang tidak sesuai (misalnya, kolom numerik yang disimpan sebagai string). Konversi tipe data yang tepat diperlukan agar model dapat memproses data dengan benar.
+- Proses: Memastikan bahwa kolom seperti rating, harga, dan ID tempat wisata memiliki tipe data numerik yang sesuai.
 
-Alasan: Beberapa kolom dalam dataset mungkin memiliki tipe data yang tidak sesuai (misalnya, kolom numerik yang disimpan sebagai string). Konversi tipe data yang tepat diperlukan agar model dapat memproses data dengan benar.
-Proses: Kami memastikan bahwa kolom seperti rating, harga, dan ID tempat wisata memiliki tipe data numerik yang sesuai, menggunakan fungsi astype() untuk konversi tipe data jika diperlukan.
-Feature Engineering dan Normalisasi
+4. Feature Engineering dan Normalisasi
+- Alasan: Beberapa fitur mungkin memerlukan transformasi agar sesuai dengan model rekomendasi. Normalisasi harga atau rating dapat membantu model dalam memahami rentang nilai yang serupa.
+- Proses: Menambahkan fitur baru jika diperlukan, seperti menggabungkan kategori tempat wisata atau melakukan normalisasi nilai dengan fungsi MinMaxScaler.
 
-Alasan: Beberapa fitur mungkin memerlukan transformasi agar sesuai dengan model rekomendasi. Normalisasi harga atau rating dapat membantu model dalam memahami rentang nilai yang serupa.
-Proses: Kami menambahkan fitur baru jika diperlukan, seperti menggabungkan kategori tempat wisata atau melakukan normalisasi nilai dengan fungsi MinMaxScaler untuk harga tiket atau rating.
-Encoding Kategori
-
-Alasan: Kolom kategori dalam data perlu diubah menjadi format numerik agar dapat digunakan dalam model berbasis algoritma pembelajaran mesin.
-Proses: Kami menggunakan teknik one-hot encoding untuk kolom kategori tempat wisata dan lokasi menggunakan pd.get_dummies().
+5. Encoding Kategori
+- Alasan: Kolom kategori dalam data perlu diubah menjadi format numerik agar dapat digunakan dalam model berbasis algoritma pembelajaran mesin.
+- Proses: Menggunakan teknik one-hot encoding untuk kolom kategori tempat wisata dan lokasi.
 
 ### Modeling
-Pada tahap modeling, kami menggunakan dua pendekatan yang berbeda untuk membangun sistem rekomendasi tempat wisata. Solusi pertama menggunakan Content-Based Filtering, sementara solusi kedua menggunakan Collaborative Filtering.
+Pada tahap modeling, dua pendekatan yang berbeda digunakan untuk membangun sistem rekomendasi tempat wisata. Solusi pertama menggunakan Content-Based Filtering, sementara solusi kedua menggunakan Collaborative Filtering.
 
 1. Content-Based Filtering
-Proses:
-Kami menggunakan fitur-fitur tekstual yang tersedia, seperti kategori tempat wisata dan deskripsi, untuk menentukan kesamaan antar tempat wisata. Setelah melakukan encoding fitur kategori, kami menghitung kemiripan antara tempat wisata menggunakan TF-IDF Vectorizer untuk mengonversi teks menjadi representasi numerik dan Cosine Similarity untuk menghitung seberapa mirip tempat wisata satu dengan lainnya.
+- Proses:
+Menggunakan fitur-fitur tekstual yang tersedia, seperti kategori tempat wisata dan deskripsi, untuk menentukan kesamaan antar tempat wisata. Menghitung kemiripan antara tempat wisata menggunakan TF-IDF Vectorizer dan Cosine Similarity.
 
-Kelebihan:
+- Kelebihan:
+    - Tidak membutuhkan data pengguna lain.
+    - Memungkinkan untuk memberikan rekomendasi yang relevan berdasarkan preferensi pengguna sebelumnya.
 
-Tidak membutuhkan data pengguna lain.
-Memungkinkan untuk memberikan rekomendasi yang relevan berdasarkan preferensi pengguna sebelumnya.
-Kekurangan:
+- Kekurangan:
+    - Terbatas hanya pada item yang sudah diketahui preferensinya. Tidak dapat memberikan rekomendasi item baru (cold start problem).
+    - Tidak mempertimbangkan interaksi pengguna dengan item lain yang dapat memberikan perspektif tambahan.
 
-Terbatas hanya pada item yang sudah diketahui preferensinya. Tidak dapat memberikan rekomendasi item baru (cold start problem).
-Tidak mempertimbangkan interaksi pengguna dengan item lain yang dapat memberikan perspektif tambahan.
-2. Collaborative Filtering
-Proses:
-Dalam pendekatan ini, kami menggunakan metode Matrix Factorization untuk membuat prediksi rating berdasarkan pola interaksi antara pengguna dan tempat wisata. Dengan menggunakan Singular Value Decomposition (SVD), kami membangun sebuah matriks yang menghubungkan pengguna dengan tempat wisata untuk menghasilkan rekomendasi berbasis interaksi pengguna.
-
-Kelebihan:
-
-Dapat menghasilkan rekomendasi berdasarkan pola interaksi pengguna dengan berbagai tempat wisata, tanpa memerlukan informasi tentang item itu sendiri.
-Lebih fleksibel dan dapat menangani cold start problem dengan lebih baik, terutama jika ada data pengguna yang cukup.
-Kekurangan:
-
-Memerlukan data interaksi pengguna yang banyak untuk memberikan rekomendasi yang akurat.
-Dapat menjadi kurang efektif jika data interaksi pengguna sangat sedikit atau tidak beragam.
-
-Pada tahap ini, kita akan membahas dua pendekatan berbeda yang digunakan untuk membuat sistem rekomendasi tempat wisata. Pendekatan pertama adalah Collaborative Filtering yang berbasis pada teknik Matrix Factorization menggunakan SVD (Singular Value Decomposition), dan pendekatan kedua adalah Content-Based Filtering, yang menggunakan informasi tentang fitur tempat wisata untuk memberikan rekomendasi.
-
-
-    ***Contoh penggunaan:***
+ ***Contoh penggunaan:***
    ```python
    generate_candidates("Surabaya", 110000).head(5)
     ```
    ***Output***
    ![Capture](https://github.com/user-attachments/assets/da658803-7498-4bd6-9858-098ef6fdcd1f)
 
-   
-   ***Kelebihan dan Kekurangan Content-Based Filtering***
-    
-    Kelebihan:
-    - Tidak terpengaruh oleh cold start problem karena tidak memerlukan data interaksi pengguna sebelumnya.
-    - Dapat memberikan rekomendasi berdasarkan kesamaan fitur, yang berguna jika informasi konten tersedia dan relevan.
-    
-    Kekurangan:
-    - Menggunakan konten yang tersedia, sehingga jika deskripsi atau fitur tidak kaya, hasilnya bisa kurang akurat.
-    - Cenderung memberikan rekomendasi yang terlalu mirip dengan yang sudah dilihat, sehingga kurang eksploratif.
-    
-***2. Collaborative Filtering:***
+2. Collaborative Filtering
+- Proses:
+Menggunakan metode Matrix Factorization untuk membuat prediksi rating berdasarkan pola interaksi antara pengguna dan tempat wisata. Menggunakan Singular Value Decomposition (SVD) untuk membangun matriks yang menghubungkan pengguna dengan tempat wisata.
 
+- Kelebihan:
+    - Dapat menghasilkan rekomendasi berdasarkan pola interaksi pengguna dengan berbagai tempat wisata, tanpa memerlukan informasi tentang item itu sendiri.
+    - Lebih fleksibel dan dapat menangani cold start problem dengan lebih baik, terutama jika ada data pengguna yang cukup.
 
-   Output <br>
+- Kekurangan:
+    - Memerlukan data interaksi pengguna yang banyak untuk memberikan rekomendasi yang akurat.
+    - Dapat menjadi kurang efektif jika data interaksi pengguna sangat sedikit atau tidak beragam.
+
+ Output <br>
     ![sss](https://github.com/user-attachments/assets/d1dac8de-08e1-4f5d-b026-77a055a79acf)
 
 
-    ***Kelebihan dan Kekurangan SVD (Collaborative Filtering)***
-    Kelebihan:
-    - Menggunakan data interaksi pengguna tanpa memerlukan informasi eksplisit tentang konten.
-    - Dapat memberikan rekomendasi yang lebih personal karena berfokus pada pola preferensi pengguna sebelumnya.
-    
-    Kekurangan:
-    - Memerlukan dataset besar untuk bekerja dengan baik. Jika jumlah rating sangat sedikit, hasilnya mungkin tidak akurat.
-    - Tidak dapat memberikan rekomendasi untuk pengguna baru (cold start problem) yang belum memberikan rating.
+## Evaluation
 
-
-
-### Evaluation
-
-Pada tahap ini, kita akan membahas metrik evaluasi yang digunakan untuk menilai kinerja sistem rekomendasi yang telah dibangun. Metrik evaluasi yang dipilih harus sesuai dengan tujuan dan karakteristik dari sistem rekomendasi, serta kemampuan sistem untuk memberikan rekomendasi yang relevan dan berkualitas kepada pengguna.
+Pada tahap ini, metrik evaluasi yang digunakan untuk menilai kinerja sistem rekomendasi yang telah dibangun dibahas. Metrik evaluasi yang dipilih harus sesuai dengan tujuan dan karakteristik dari sistem rekomendasi.
 
 ***Metrik Evaluasi yang Digunakan***
 Untuk sistem rekomendasi, terdapat beberapa metrik evaluasi yang sering digunakan. Dalam proyek ini, kita akan fokus pada dua metrik utama yang sesuai dengan konteks Collaborative Filtering (SVD) dan Content-Based Filtering, yaitu Precision@k dan Recall@k.
@@ -281,65 +247,7 @@ Pada Collaborative Filtering, model ini menggunakan data rating dan preferensi d
     Kombinasi dari Precision dan Recall untuk mengevaluasi keseimbangan antara keduanya.
 
 **Perbandingan Evaluasi antara Content-Based Filtering dan Collaborative Filtering**
-Untuk melakukan evaluasi, kita bisa mengasumsikan bahwa kita memiliki data tentang tempat yang sudah dikunjungi atau disukai oleh pengguna (dari data rating atau interaksi sebelumnya), dan kita dapat menggunakan metrik evaluasi seperti Precision@k, Recall@k, dan F1-Score@k.
 
-Berikut adalah langkah-langkah evaluasi menggunakan Precision, Recall, dan F1-Score.
-
-- Kode untuk Evaluasi Model
-
-```python
-from sklearn.metrics import precision_score, recall_score, f1_score
-
-# Data relevansi berdasarkan tempat yang disukai oleh pengguna (contoh)
-relevansi = {
-    'user_59': [5, 17, 107, 142, 347]  # ID tempat yang relevan
-}
-
-# Rekomendasi dari Content-Based Filtering (top 5)
-rekomendasi_cb = {
-    'user_59': [5, 6, 17, 18, 22]  # Rekomendasi dari Content-Based
-}
-
-# Rekomendasi dari Collaborative Filtering (top 5)
-rekomendasi_cf = {
-    'user_59': [5, 17, 107, 142, 347]  # Rekomendasi dari Collaborative Filtering
-}
-
-# Fungsi untuk menghitung Precision@k, Recall@k, dan F1-Score@k
-def precision_at_k(rekomendasi, relevansi, k=5):
-    relevant_recommended = len(set(rekomendasi[:k]) & set(relevansi))
-    return relevant_recommended / k
-
-def recall_at_k(rekomendasi, relevansi, k=5):
-    relevant_recommended = len(set(rekomendasi[:k]) & set(relevansi))
-    return relevant_recommended / len(relevansi)
-
-def f1_score_at_k(rekomendasi, relevansi, k=5):
-    precision = precision_at_k(rekomendasi, relevansi, k)
-    recall = recall_at_k(rekomendasi, relevansi, k)
-    if precision + recall == 0:
-        return 0
-    return 2 * (precision * recall) / (precision + recall)
-
-# Evaluasi untuk Content-Based Filtering
-precision_cb_k = precision_at_k(rekomendasi_cb['user_59'], relevansi['user_59'])
-recall_cb_k = recall_at_k(rekomendasi_cb['user_59'], relevansi['user_59'])
-f1_cb_k = f1_score_at_k(rekomendasi_cb['user_59'], relevansi['user_59'])
-
-# Evaluasi untuk Collaborative Filtering
-precision_cf_k = precision_at_k(rekomendasi_cf['user_59'], relevansi['user_59'])
-recall_cf_k = recall_at_k(rekomendasi_cf['user_59'], relevansi['user_59'])
-f1_cf_k = f1_score_at_k(rekomendasi_cf['user_59'], relevansi['user_59'])
-
-# Output hasil evaluasi
-print(f"Content-Based Filtering - Precision@5: {precision_cb_k:.4f}")
-print(f"Content-Based Filtering - Recall@5: {recall_cb_k:.4f}")
-print(f"Content-Based Filtering - F1-Score@5: {f1_cb_k:.4f}")
-
-print(f"Collaborative Filtering - Precision@5: {precision_cf_k:.4f}")
-print(f"Collaborative Filtering - Recall@5: {recall_cf_k:.4f}")
-print(f"Collaborative Filtering - F1-Score@5: {f1_cf_k:.4f}")
-```
 Output <br>
 ![sasa](https://github.com/user-attachments/assets/d443dd61-e04b-4e2d-a08a-aba2ef9ab14f)
 
